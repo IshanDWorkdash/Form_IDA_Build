@@ -45,7 +45,7 @@ class FbSection extends StatefulWidget {
     this.fieldAlignM = Alignment.centerLeft,
     this.fieldsize = double.infinity,
     this.customWidth = 0.9,
-    this.customHeight = 0.15,
+    this.customHeight = 0.25,
     this.fontSize = 15.0,
   });
 
@@ -115,6 +115,7 @@ class _FbSectionState extends State<FbSection> {
           border: Border.all(color: Colors.blueAccent),
         ),
         width: widget.fieldsize,
+        height: MediaQuery.of(context).size.height * widget.customHeight,
         padding: EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, //widget.txtAlign,
@@ -130,42 +131,42 @@ class _FbSectionState extends State<FbSection> {
             ),
             selectedFieldType == "Checkbox"
                 ? CheckBox(
-              itemString: widget.itemStringChBox,
-              items: widget.itemsChBox,
-              nameList: widget.nameListChBox,
-              getFont: impSetFont,
-              fontSize: widget.fontSize,
-              fontColor: selectedtxtColor,
-              backGRColor: selectedDDbgColor,
-              txtBold: textBold,
-              txtItalic: textItalic,
-              txtUnderLine: textUnderLine,
-            )
+                    itemString: widget.itemStringChBox,
+                    items: widget.itemsChBox,
+                    nameList: widget.nameListChBox,
+                    getFont: impSetFont,
+                    fontSize: widget.fontSize,
+                    fontColor: selectedtxtColor,
+                    backGRColor: selectedDDbgColor,
+                    txtBold: textBold,
+                    txtItalic: textItalic,
+                    txtUnderLine: textUnderLine,
+                  )
                 : selectedFieldType == "Drop Down"
-                ? DropDown(
-              items: widget.itemst,
-              itemString: widget.itemSet,
-              selectedItem: selectedDDItem,
-              fontSize: widget.fontSize,
-              textColor: selectedtxtColor,
-              backGRColor: selectedDDbgColor,
-              txtBold: textBold,
-              txtItalic: textItalic,
-              txtUnderLine: textUnderLine,
-            )
-                : selectedFieldType == "Radio Button"
-                ? RadioButton(
-              items: widget.itemsRB,
-              itemString: widget.itemStringRB,
-              nameList: widget.nameListRB,
-              fontSize: widget.fontSize,
-              fontColor: selectedtxtColor,
-              backGRColor: selectedDDbgColor,
-              txtBold: textBold,
-              txtItalic: textItalic,
-              txtUnderLine: textUnderLine,
-            )
-                : Text("")
+                    ? DropDown(
+                        items: widget.itemst,
+                        itemString: widget.itemSet,
+                        selectedItem: selectedDDItem,
+                        fontSize: widget.fontSize,
+                        textColor: selectedtxtColor,
+                        backGRColor: selectedDDbgColor,
+                        txtBold: textBold,
+                        txtItalic: textItalic,
+                        txtUnderLine: textUnderLine,
+                      )
+                    : selectedFieldType == "Radio Button"
+                        ? RadioButton(
+                            items: widget.itemsRB,
+                            itemString: widget.itemStringRB,
+                            nameList: widget.nameListRB,
+                            fontSize: widget.fontSize,
+                            fontColor: selectedtxtColor,
+                            backGRColor: selectedDDbgColor,
+                            txtBold: textBold,
+                            txtItalic: textItalic,
+                            txtUnderLine: textUnderLine,
+                          )
+                        : Text("")
           ],
         ),
       ),
@@ -270,7 +271,7 @@ class _FbSectionState extends State<FbSection> {
                                 alignment: Alignment.topRight,
                                 value: selectedFieldType,
                                 items:
-                                widget.fieldTypeCheck.map((String value) {
+                                    widget.fieldTypeCheck.map((String value) {
                                   return DropdownMenuItem<String>(
                                       value: value, child: Text(value));
                                 }).toList(),
@@ -294,10 +295,10 @@ class _FbSectionState extends State<FbSection> {
                             child: selectedFieldType == "Drop Down"
                                 ? TextField(controller: itemController)
                                 : selectedFieldType == "Checkbox"
-                                ? TextField(controller: itemChBoxController)
-                                : TextField(
-                              controller: itemsRBContraller,
-                            ),
+                                    ? TextField(controller: itemChBoxController)
+                                    : TextField(
+                                        controller: itemsRBContraller,
+                                      ),
                           ),
                         ],
                       ),
@@ -340,10 +341,10 @@ class _FbSectionState extends State<FbSection> {
                             flex: 2,
                             child: selectedSize == "Custom"
                                 ? TextField(
-                              textAlign: TextAlign.center,
-                              keyboardType: TextInputType.number,
-                              controller: customWidthController,
-                            )
+                                    textAlign: TextAlign.center,
+                                    keyboardType: TextInputType.number,
+                                    controller: customWidthController,
+                                  )
                                 : Text(""),
                           ),
                         ],
@@ -361,10 +362,10 @@ class _FbSectionState extends State<FbSection> {
                             flex: 2,
                             child: selectedSize == "Custom"
                                 ? TextField(
-                              textAlign: TextAlign.center,
-                              keyboardType: TextInputType.number,
-                              controller: customHeightController,
-                            )
+                                    textAlign: TextAlign.center,
+                                    keyboardType: TextInputType.number,
+                                    controller: customHeightController,
+                                  )
                                 : Text(""),
                           ),
                         ],
@@ -434,10 +435,10 @@ class _FbSectionState extends State<FbSection> {
                           Ink(
                             decoration: textBold == FontWeight.bold
                                 ? const ShapeDecoration(
-                                color: Colors.grey, shape: CircleBorder())
+                                    color: Colors.grey, shape: CircleBorder())
                                 : const ShapeDecoration(
-                                color: Colors.transparent,
-                                shape: CircleBorder()),
+                                    color: Colors.transparent,
+                                    shape: CircleBorder()),
                             child: IconButton(
                               icon: const Icon(Icons.format_bold),
                               tooltip: 'Bold',
@@ -458,10 +459,10 @@ class _FbSectionState extends State<FbSection> {
                           Ink(
                             decoration: textItalic == FontStyle.italic
                                 ? ShapeDecoration(
-                                color: Colors.grey, shape: CircleBorder())
+                                    color: Colors.grey, shape: CircleBorder())
                                 : ShapeDecoration(
-                                shape: CircleBorder(),
-                                color: Colors.transparent),
+                                    shape: CircleBorder(),
+                                    color: Colors.transparent),
                             child: IconButton(
                               icon: const Icon(Icons.format_italic),
                               tooltip: 'Italic',
@@ -481,13 +482,13 @@ class _FbSectionState extends State<FbSection> {
                           SizedBox(width: 10.0),
                           Ink(
                             decoration:
-                            textUnderLine == TextDecoration.underline
-                                ? ShapeDecoration(
-                                color: Colors.grey,
-                                shape: CircleBorder())
-                                : ShapeDecoration(
-                                color: Colors.transparent,
-                                shape: CircleBorder()),
+                                textUnderLine == TextDecoration.underline
+                                    ? ShapeDecoration(
+                                        color: Colors.grey,
+                                        shape: CircleBorder())
+                                    : ShapeDecoration(
+                                        color: Colors.transparent,
+                                        shape: CircleBorder()),
                             child: IconButton(
                               icon: const Icon(Icons.format_underline),
                               tooltip: 'Underline',
@@ -618,7 +619,7 @@ class _FbSectionState extends State<FbSection> {
 
                   if (widget.itemSet == null || widget.itemSet == "") {
                     widget.itemSet =
-                    "Sample 1 , Sample 2 , Sample 3 , Sample 4 ";
+                        "Sample 1 , Sample 2 , Sample 3 , Sample 4 ";
                     widget.itemst = widget.itemSet.split(',');
                   } else {
                     widget.itemst = widget.itemSet.split(',');
@@ -628,7 +629,7 @@ class _FbSectionState extends State<FbSection> {
                   if (widget.itemStringChBox == null ||
                       widget.itemStringChBox == "") {
                     widget.itemStringChBox =
-                    " Sample 1, Sample 2, Sample 3, Sample 4";
+                        " Sample 1, Sample 2, Sample 3, Sample 4";
                     widget.nameListChBox = widget.itemStringChBox.split(',');
                     widget.itemsChBox.clear();
                     for (int i = 0; i < widget.nameListChBox.length; i++) {
@@ -648,7 +649,7 @@ class _FbSectionState extends State<FbSection> {
                   if (widget.itemStringRB == null ||
                       widget.itemStringRB == "") {
                     widget.itemStringRB =
-                    " Sample 1, Sample 2, Sample 3, Sample 4";
+                        " Sample 1, Sample 2, Sample 3, Sample 4";
                     widget.nameListRB = widget.itemStringRB.split(',');
                     widget.itemsRB.clear();
                     for (int i = 0; i < widget.nameListRB.length; i++) {
@@ -698,6 +699,9 @@ class _FbSectionState extends State<FbSection> {
                     if (selectedsetSize != selectedSize) {
                       selectedSize = selectedsetSize;
                     }
+                    if (selectedsetfieldalign != selectedfieldalign) {
+                      selectedfieldalign = selectedsetfieldalign;
+                    }
                     if (selectedsetFieldType != selectedFieldType) {
                       selectedFieldType = selectedsetFieldType;
                     }
@@ -732,23 +736,23 @@ class _FbSectionState extends State<FbSection> {
   }
 
   void pickColor(BuildContext context, String title, int key) => showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title),
-      content: Column(
-        children: [
-          buildPicker(key),
-          TextButton(
-            child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
-            onPressed: () {
-              Navigator.of(context).pop();
-              setState(() {});
-            },
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Column(
+            children: [
+              buildPicker(key),
+              TextButton(
+                child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget buildPicker(int key) {
     if (key == 1) {

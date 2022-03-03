@@ -6,7 +6,12 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:form_ida_build/utils/app_constants.dart';
 
 class FbTextField extends StatefulWidget {
-  List<String> sizeCheck = <String>["Small", "Medium", "Large"];
+  List<String> sizeCheck = <String>["Small", "Medium", "Large", "Custom"];
+  double? fieldsize;
+  List<String> fieldalign = <String>["Left", "Center", "Right"];
+  Alignment fieldAlignM;
+  num customWidth;
+  num customHeight;
   // int selectedSize;
   List<String> fieldTypeCheck = <String>[
     "Text",
@@ -20,7 +25,6 @@ class FbTextField extends StatefulWidget {
   Color? backgroundColor;
   double? fontSize;
   String hintText;
-  double? fieldsize;
   TextEditingController? getcontroller;
   String suffixtxt;
   int? maxDigits;
@@ -40,11 +44,14 @@ class FbTextField extends StatefulWidget {
     this.fontSize = 12.0,
     this.colorFieldName = Colors.black,
     this.fontSizeFieldName = 15.0,
-    this.fieldsize = double.infinity,
     this.keyboardType = TextInputType.text,
     this.suffixtxt = "",
     this.maxDigits = 100,
     this.txtCounter = "",
+    this.fieldsize = double.infinity,
+    this.fieldAlignM = Alignment.centerLeft,
+    this.customWidth = 0.9,
+    this.customHeight = 0.11,
   });
 
   @override
@@ -60,6 +67,9 @@ class _FbTextFieldState extends State<FbTextField> {
 
   String selectedSize = "Large";
   String selectedsetSize = "Large";
+
+  String selectedfieldalign = "Left";
+  String selectedsetfieldalign = "Left";
 
   String selectedFieldType = "Text";
   String selectedsetFieldType = "Text";
@@ -84,29 +94,33 @@ class _FbTextFieldState extends State<FbTextField> {
         showMyDialog();
       },
       child: Container(
-        width: widget.fieldsize,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          border: Border.all(color: Colors.blueAccent),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 8.0,
-            ),
-            Text(
-              disappearvalue == true
-                  ? widget.textFieldName
-                  : widget.textHidedName,
-              style: TextStyle(
-                color: widget.colorFieldName,
-                fontSize: widget.fontSizeFieldName,
+        alignment: widget.fieldAlignM,
+        child: Container(
+          width: widget.fieldsize,
+          height: MediaQuery.of(context).size.height * widget.customHeight,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            border: Border.all(color: Colors.blueAccent),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 8.0,
               ),
-            ),
-            mandotoryvalue == false ? normalTextField() : validateTextField(),
-          ],
+              Text(
+                disappearvalue == true
+                    ? widget.textFieldName
+                    : widget.textHidedName,
+                style: TextStyle(
+                  color: widget.colorFieldName,
+                  fontSize: widget.fontSizeFieldName,
+                ),
+              ),
+              mandotoryvalue == false ? normalTextField() : validateTextField(),
+            ],
+          ),
         ),
       ),
     );
@@ -117,8 +131,12 @@ class _FbTextFieldState extends State<FbTextField> {
     TextEditingController fieldNameController = new TextEditingController();
     TextEditingController fontSizeController = new TextEditingController();
     TextEditingController fontSizeFieldNameController =
-    new TextEditingController();
+        new TextEditingController();
     TextEditingController maxDigitController = new TextEditingController();
+    TextEditingController customWidthController = new TextEditingController();
+    TextEditingController customHeightController = new TextEditingController();
+    customWidthController.text = widget.customWidth.toString();
+    customHeightController.text = widget.customHeight.toString();
     hintTextController.text = widget.hintText;
     fieldNameController.text = widget.textFieldName;
     fontSizeController.text = widget.fontSize.toString();
@@ -311,24 +329,32 @@ class _FbTextFieldState extends State<FbTextField> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(flex: 1, child: Text("List of Currency")),
                         Expanded(
-                            flex: 2,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                showCurrencyPicker(
-                                    context: context,
-                                    showFlag: true,
-                                    showCurrencyName: true,
-                                    showCurrencyCode: true,
-                                    onSelect: (Currency currency) {
-                                      currencySymbol = "${currency.symbol} ";
-                                      currencyName =
-                                      "       ( ${currency.name} )";
-                                    });
-                              },
-                              child: Text("Currency"),
-                            )),
+                            flex: 1,
+                            child: selectedFieldType == "Currency"
+                                ? Text("List of Currency")
+                                : Text("")),
+                        Expanded(
+                          flex: 2,
+                          child: selectedFieldType == "Currency"
+                              ? ElevatedButton(
+                                  onPressed: () {
+                                    showCurrencyPicker(
+                                        context: context,
+                                        showFlag: true,
+                                        showCurrencyName: true,
+                                        showCurrencyCode: true,
+                                        onSelect: (Currency currency) {
+                                          currencySymbol =
+                                              "${currency.symbol} ";
+                                          currencyName =
+                                              "       ( ${currency.name} )";
+                                        });
+                                  },
+                                  child: Text("Currency"),
+                                )
+                              : Text(""),
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -342,9 +368,9 @@ class _FbTextFieldState extends State<FbTextField> {
                           flex: 2,
                           child: DropdownButtonFormField<String>(
                               value: selectedSize,
-                              // value: selectedSize == "Small" ? widget.sizeCheck[0] : selectedSize == "Medium" ? widget.sizeCheck[1] : widget.sizeCheck[2],
                               items: widget.sizeCheck.map((String value) {
                                 return DropdownMenuItem<String>(
+                                  alignment: Alignment.topRight,
                                   value: value,
                                   child: Text(
                                     value,
@@ -355,6 +381,71 @@ class _FbTextFieldState extends State<FbTextField> {
                                 _setState(() {
                                   print(newValue);
                                   selectedSize = newValue!;
+                                });
+                              }),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: selectedSize == "Custom"
+                              ? Text("Custom Width")
+                              : Text(""),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: selectedSize == "Custom"
+                              ? TextField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  controller: customWidthController,
+                                )
+                              : Text(""),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: selectedSize == "Custom"
+                              ? Text("Custom Height")
+                              : Text(""),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: selectedSize == "Custom"
+                              ? TextField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  controller: customHeightController,
+                                )
+                              : Text(""),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 1, child: Text("Field Alignment")),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                              value: selectedfieldalign,
+                              items: widget.fieldalign.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                _setState(() {
+                                  selectedfieldalign = newValue!;
                                 });
                               }),
                         ),
@@ -479,12 +570,23 @@ class _FbTextFieldState extends State<FbTextField> {
                   disappearsetValue = disappearvalue;
                   selectedsetSize = selectedSize;
                   selectedsetFieldType = selectedFieldType;
+                  selectedsetfieldalign = selectedfieldalign;
+                  if (selectedfieldalign == "Left") {
+                    widget.fieldAlignM = Alignment.centerLeft;
+                  } else if (selectedfieldalign == "Center") {
+                    widget.fieldAlignM = Alignment.center;
+                  } else if (selectedfieldalign == "Right") {
+                    widget.fieldAlignM = Alignment.centerRight;
+                  }
                   if (selectedSize == "Small") {
                     widget.fieldsize = MediaQuery.of(context).size.width * 0.40;
                   } else if (selectedSize == "Medium") {
                     widget.fieldsize = MediaQuery.of(context).size.width * 0.60;
                   } else if (selectedSize == "Large") {
                     widget.fieldsize = MediaQuery.of(context).size.width;
+                  } else if (selectedSize == "Custom") {
+                    widget.fieldsize =
+                        MediaQuery.of(context).size.width * widget.customWidth;
                   }
                   if (selectedFieldType == "Text") {
                     widget.getcontroller = new TextEditingController();
@@ -530,6 +632,13 @@ class _FbTextFieldState extends State<FbTextField> {
                         colorFieldName: widget.colorFieldName!,
                         backgroundColor: widget.backgroundColor!,
                         maxDigits: widget.maxDigits,
+                        fieldsize: widget.fieldsize,
+                        fieldAlignM: widget.fieldAlignM,
+                        customHeight: widget.customHeight,
+                        customWidth: widget.customWidth,
+                        keyboardType: widget.keyboardType,
+                        suffixtxt: widget.suffixtxt,
+                        textHidedName: widget.textHidedName,
                       ),
                       elementId: "TextField${AppConstants.elementID}"));
                 });
@@ -539,14 +648,17 @@ class _FbTextFieldState extends State<FbTextField> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   setState(() {
+                    if (selectedsetfieldalign != selectedfieldalign) {
+                      selectedfieldalign = selectedsetfieldalign;
+                    }
                     if (mandotorysetValue != mandotoryvalue) {
                       mandotoryvalue = mandotorysetValue;
                     }
-                    if (disappearsetValue != disappearvalue) {
-                      disappearvalue = disappearsetValue;
-                    }
                     if (selectedsetSize != selectedSize) {
                       selectedSize = selectedsetSize;
+                    }
+                    if (disappearsetValue != disappearvalue) {
+                      disappearvalue = disappearsetValue;
                     }
                     if (selectedsetFieldType != selectedFieldType) {
                       selectedFieldType = selectedsetFieldType;
@@ -564,23 +676,23 @@ class _FbTextFieldState extends State<FbTextField> {
   }
 
   void pickColor(BuildContext context, String title, int key) => showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title),
-      content: Column(
-        children: [
-          buildPicker(key),
-          TextButton(
-            child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
-            onPressed: () {
-              Navigator.of(context).pop();
-              setState(() {});
-            },
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Column(
+            children: [
+              buildPicker(key),
+              TextButton(
+                child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget buildPicker(int key) {
     if (key == 1) {

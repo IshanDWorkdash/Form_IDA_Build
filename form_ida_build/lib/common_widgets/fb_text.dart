@@ -61,20 +61,19 @@ class _FbTextState extends State<FbText> {
         showMyDialog();
       },
       child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(12.0),
-        child: Text(
-          widget.text,
-          style: TextStyle(
-          color: widget.color,
-          backgroundColor: widget.backgroundColor,
-          fontSize: widget.fontSize,
-          ),
-          textAlign: widget.textAlign,
-          textDirection: widget.textDirection,
-          maxLines: widget.maxLines,
-        )
-      ),
+          width: double.infinity,
+          padding: EdgeInsets.all(12.0),
+          child: Text(
+            widget.text,
+            style: TextStyle(
+              color: widget.color,
+              backgroundColor: widget.backgroundColor,
+              fontSize: widget.fontSize,
+            ),
+            textAlign: widget.textAlign,
+            textDirection: widget.textDirection,
+            maxLines: widget.maxLines,
+          )),
     );
   }
 
@@ -85,7 +84,7 @@ class _FbTextState extends State<FbText> {
     fontSizeController.text = widget.fontSize.toString();
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
+      barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(0, 24.0, 0, 24.0),
@@ -121,10 +120,10 @@ class _FbTextState extends State<FbText> {
                           Ink(
                             decoration: textBold == FontWeight.bold
                                 ? const ShapeDecoration(
-                                color: Colors.grey, shape: CircleBorder())
+                                    color: Colors.grey, shape: CircleBorder())
                                 : const ShapeDecoration(
-                                color: Colors.transparent,
-                                shape: CircleBorder()),
+                                    color: Colors.transparent,
+                                    shape: CircleBorder()),
                             child: IconButton(
                               icon: const Icon(Icons.format_bold),
                               tooltip: 'Bold',
@@ -145,10 +144,10 @@ class _FbTextState extends State<FbText> {
                           Ink(
                             decoration: textItalic == FontStyle.italic
                                 ? ShapeDecoration(
-                                color: Colors.grey, shape: CircleBorder())
+                                    color: Colors.grey, shape: CircleBorder())
                                 : ShapeDecoration(
-                                shape: CircleBorder(),
-                                color: Colors.transparent),
+                                    shape: CircleBorder(),
+                                    color: Colors.transparent),
                             child: IconButton(
                               icon: const Icon(Icons.format_italic),
                               tooltip: 'Italic',
@@ -168,13 +167,13 @@ class _FbTextState extends State<FbText> {
                           SizedBox(width: 10.0),
                           Ink(
                             decoration:
-                            textUnderLine == TextDecoration.underline
-                                ? ShapeDecoration(
-                                color: Colors.grey,
-                                shape: CircleBorder())
-                                : ShapeDecoration(
-                                color: Colors.transparent,
-                                shape: CircleBorder()),
+                                textUnderLine == TextDecoration.underline
+                                    ? ShapeDecoration(
+                                        color: Colors.grey,
+                                        shape: CircleBorder())
+                                    : ShapeDecoration(
+                                        color: Colors.transparent,
+                                        shape: CircleBorder()),
                             child: IconButton(
                               icon: const Icon(Icons.format_underline),
                               tooltip: 'Underline',
@@ -396,6 +395,9 @@ class _FbTextState extends State<FbText> {
                         fontSize: widget.fontSize,
                         color: widget.color,
                         backgroundColor: widget.backgroundColor,
+                        maxLines: widget.maxLines,
+                        textAlign: widget.textAlign,
+                        textDirection: widget.textDirection,
                       ),
                       elementId: "Text${AppConstants.elementID}"));
                 });
@@ -424,23 +426,23 @@ class _FbTextState extends State<FbText> {
   }
 
   void pickColor(BuildContext context, String title, int key) => showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title),
-      content: Column(
-        children: [
-          buildPicker(key),
-          TextButton(
-            child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
-            onPressed: () {
-              Navigator.of(context).pop();
-              setState(() {});
-            },
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Column(
+            children: [
+              buildPicker(key),
+              TextButton(
+                child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget buildPicker(int key) {
     if (key == 1) {
