@@ -7,37 +7,58 @@ class FbRadioButton extends StatefulWidget {
   List<RadioEntity> items = <RadioEntity>[];
   List<String> nameList = <String>[];
   String itemString = " Sample 1, Sample 2, Sample 3, Sample 4";
-  int defaultSelect;
-  Color selectedFontColor;
+  int selectedItem;
+  double fontSize;
   List<String> sizeCheck = <String>["Small", "Medium", "Large", "Custom"];
   double? fieldsize;
   List<String> fieldalign = <String>["Left", "Center", "Right"];
-  List<String> ddalign = <String>["Left", "Center", "Right"];
+  List<String> rbAlign = <String>["Left", "Center", "Right"];
   Alignment fieldAlignM;
   num customWidth;
   num customHeight;
   String textFieldName;
   String textHidedName;
-  CrossAxisAlignment ddAlign;
-  Color dropDownColor;
-  Color bgColor;
-  double fontSize;
-  Color textColor;
+  CrossAxisAlignment rbAlignmnt;
+  double? fontSizeFieldName;
+
+  Color? txtColor1;
+  Color? txtColor2;
+  Color? textbgColor1;
+  Color? textbgColor2;
+
+  Color? fieldColor1;
+  Color? fieldColor2;
+  Color? fieldbgColor1;
+  Color? fieldbgColor2;
+
+  Color? bgColorAll1;
+  Color? bgColorAll2;
+  Color? selectedColor1;
+  Color? selectedColor2;
 
   FbRadioButton({
     this.textFieldName = "Filed Name",
     this.textHidedName = "",
-    this.defaultSelect = 0,
+    this.selectedItem = 0,
     this.fontSize = 16.0,
-    this.dropDownColor = Colors.white,
-    this.bgColor = Colors.white,
-    this.textColor = Colors.black87,
-    this.selectedFontColor = Colors.blueAccent,
+    this.fontSizeFieldName = 15.0,
     this.fieldsize = double.infinity,
     this.fieldAlignM = Alignment.centerLeft,
     this.customWidth = 0.9,
-    this.customHeight = 0.23,
-    this.ddAlign = CrossAxisAlignment.start,
+    this.customHeight = 0.21,
+    this.rbAlignmnt = CrossAxisAlignment.start,
+    this.txtColor1 = Colors.black,
+    this.textbgColor1 = Colors.white60,
+    this.fieldColor1 = Colors.black,
+    this.fieldbgColor1 = Colors.white,
+    this.bgColorAll1 = Colors.white,
+    this.txtColor2 = Colors.black,
+    this.textbgColor2 = Colors.white,
+    this.fieldColor2 = Colors.black,
+    this.fieldbgColor2 = Colors.white,
+    this.bgColorAll2 = Colors.white,
+    this.selectedColor1 = Colors.blueAccent,
+    this.selectedColor2 = Colors.blueAccent,
   });
 
   @override
@@ -47,8 +68,8 @@ class FbRadioButton extends StatefulWidget {
 class _FbRadioButtonState extends State<FbRadioButton> {
   late RadioEntity defaultItem;
 
-  bool disappearvalue = false;
-  bool disappearsetValue = false;
+  bool disappearvalue = true;
+  bool disappearsetValue = true;
 
   bool mandotoryvalue = false;
   bool mandotorysetValue = false;
@@ -59,8 +80,26 @@ class _FbRadioButtonState extends State<FbRadioButton> {
   String selectedfieldalign = "Left";
   String selectedsetfieldalign = "Left";
 
-  String selectedddalign = "Left";
-  String selectedsetddalign = "Left";
+  String selectedrbAlign = "Left";
+  String selectedsetrbAlign = "Left";
+
+  FontWeight textBold = FontWeight.normal;
+  FontWeight textSetBold = FontWeight.normal;
+
+  FontStyle textItalic = FontStyle.normal;
+  FontStyle textSetItalic = FontStyle.normal;
+
+  TextDecoration textUnderLine = TextDecoration.none;
+  TextDecoration textSetUnderLine = TextDecoration.none;
+
+  FontWeight fieldBold = FontWeight.normal;
+  FontWeight fieldSetBold = FontWeight.normal;
+
+  FontStyle fieldItalic = FontStyle.normal;
+  FontStyle fieldSetItalic = FontStyle.normal;
+
+  TextDecoration fieldUnderLine = TextDecoration.none;
+  TextDecoration fieldSetUnderLine = TextDecoration.none;
 
   @override
   void initState() {
@@ -69,7 +108,7 @@ class _FbRadioButtonState extends State<FbRadioButton> {
     for (int i = 0; i < widget.nameList.length; i++) {
       widget.items.add(RadioEntity(id: i, name: widget.nameList[i]));
     }
-    defaultItem = widget.items[widget.defaultSelect];
+    defaultItem = widget.items[widget.selectedItem];
     super.initState();
   }
 
@@ -84,17 +123,27 @@ class _FbRadioButtonState extends State<FbRadioButton> {
         child: Container(
           width: widget.fieldsize,
           height: MediaQuery.of(context).size.height * widget.customHeight,
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           decoration: BoxDecoration(
-            color: widget.bgColor,
+            color: widget.bgColorAll2,
             borderRadius: BorderRadius.circular(12.0),
             border: Border.all(color: Colors.blueAccent),
           ),
-          child: Column(crossAxisAlignment: widget.ddAlign, children: [
+          child: Column(crossAxisAlignment: widget.rbAlignmnt, children: [
+            SizedBox(
+              height: 8.0,
+            ),
             Text(
               disappearvalue == true
                   ? widget.textFieldName
                   : widget.textHidedName,
+              style: TextStyle(
+                  color: widget.fieldColor2,
+                  backgroundColor: widget.fieldbgColor2,
+                  fontSize: widget.fontSizeFieldName,
+                  fontWeight: fieldBold,
+                  fontStyle: fieldItalic,
+                  decoration: fieldUnderLine),
             ),
             SizedBox(
               height: 12.0,
@@ -118,6 +167,7 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                                 child: Radio<RadioEntity>(
                                   value: e,
                                   groupValue: defaultItem,
+                                  activeColor: widget.selectedColor2,
                                   onChanged: (val) {
                                     setState(() {
                                       defaultItem = val!;
@@ -130,14 +180,18 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                             Text(
                               e.name,
                               style: TextStyle(
-                                fontSize: widget.fontSize,
-                                color: defaultItem.name == e.name
-                                    ? widget.selectedFontColor
-                                    : widget.textColor,
-                                fontWeight: defaultItem.name == e.name
-                                    ? FontWeight.w600
-                                    : FontWeight.w400,
-                              ),
+                                  fontSize: widget.fontSize,
+                                  color: defaultItem.name == e.name
+                                      ? widget.selectedColor2
+                                      : widget.txtColor2,
+                                  fontWeight: defaultItem.name == e.name
+                                      ? FontWeight.w900
+                                      : textSetBold == textBold
+                                          ? textBold
+                                          : FontWeight.w400,
+                                  backgroundColor: widget.textbgColor2,
+                                  fontStyle: textItalic,
+                                  decoration: textUnderLine),
                             ),
                             SizedBox(width: 8),
                           ],
@@ -163,15 +217,20 @@ class _FbRadioButtonState extends State<FbRadioButton> {
     TextEditingController fieldNameController = new TextEditingController();
     TextEditingController customWidthController = new TextEditingController();
     TextEditingController customHeightController = new TextEditingController();
+    TextEditingController fontSizeController = new TextEditingController();
+    TextEditingController fontSizeFieldNameController =
+        new TextEditingController();
+    items.text = widget.itemString;
+    fontSize.text = widget.fontSize.toString();
+    selectedElement.text = widget.selectedItem.toString();
     fieldNameController.text = widget.textFieldName;
     customWidthController.text = widget.customWidth.toString();
     customHeightController.text = widget.customHeight.toString();
-    fontSize.text = widget.fontSize.toString();
-    items.text = widget.itemString;
-    selectedElement.text = widget.defaultSelect.toString();
+    fontSizeController.text = widget.fontSize.toString();
+    fontSizeFieldNameController.text = widget.fontSizeFieldName.toString();
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
+      barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(0, 24.0, 0, 24.0),
@@ -183,27 +242,26 @@ class _FbRadioButtonState extends State<FbRadioButton> {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Text("   Field Name",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
+                          flex: 1,
+                          child: Text("Filed Name"),
+                        ),
+                        Expanded(
+                          flex: 2,
                           child: TextField(
                             controller: fieldNameController,
                           ),
                         ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
                         Expanded(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
                                   Text(
-                                    "Hide  ",
+                                    "  Hide   ",
                                     style: TextStyle(
                                         color: Colors.deepOrangeAccent,
                                         fontSize: 10.0),
@@ -236,18 +294,33 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Items List"),
+                          child: Text("Field Name Alignment"),
                         ),
                         Expanded(
                           flex: 2,
-                          child: TextField(
-                            controller: items,
-                          ),
+                          child: DropdownButtonFormField<String>(
+                              value: selectedrbAlign,
+                              items: widget.rbAlign.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                _setState(() {
+                                  selectedrbAlign = newValue!;
+                                });
+                              }),
                         ),
                       ],
                     ),
@@ -270,7 +343,6 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                               }).toList(),
                               onChanged: (newValue) {
                                 _setState(() {
-                                  print(newValue);
                                   selectedSize = newValue!;
                                 });
                               }),
@@ -347,24 +419,161 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Dropdown Alignment"),
+                          child: Text("Field Font Size"),
                         ),
                         Expanded(
-                          child: DropdownButtonFormField<String>(
-                              value: selectedddalign,
-                              items: widget.ddalign.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                _setState(() {
-                                  selectedddalign = newValue!;
-                                });
-                              }),
+                          flex: 2,
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            controller: fontSizeFieldNameController,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 90.0),
+                        Ink(
+                          decoration: fieldBold == FontWeight.bold
+                              ? const ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : const ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_bold),
+                            tooltip: 'Bold',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (fieldBold == FontWeight.normal) {
+                                  fieldBold = FontWeight.bold;
+                                } else {
+                                  fieldBold = FontWeight.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: fieldItalic == FontStyle.italic
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  shape: CircleBorder(),
+                                  color: Colors.transparent),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_italic),
+                            tooltip: 'Italic',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (fieldItalic == FontStyle.normal) {
+                                  fieldItalic = FontStyle.italic;
+                                } else {
+                                  fieldItalic = FontStyle.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: fieldUnderLine == TextDecoration.underline
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_underline),
+                            tooltip: 'Underline',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (fieldUnderLine == TextDecoration.none) {
+                                  fieldUnderLine = TextDecoration.underline;
+                                } else {
+                                  fieldUnderLine = TextDecoration.none;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Field Name Color"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            child: Text(
+                              "Pick Font Color",
+                              style: TextStyle(
+                                color: widget.fieldColor1,
+                              ),
+                            ),
+                            onPressed: () {
+                              pickColor(context, "Pick Font Color", 3);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Field Name BG Color"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            child: Text(
+                              "Pick Background Color",
+                            ),
+                            onPressed: () {
+                              pickColor(context, "Pick Background Color", 4);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 3.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Items List"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextField(
+                            controller: items,
+                          ),
                         ),
                       ],
                     ),
@@ -389,7 +598,7 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Font Size"),
+                          child: Text("Text Font Size"),
                         ),
                         Expanded(
                           flex: 2,
@@ -406,9 +615,87 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        SizedBox(width: 90.0),
+                        Ink(
+                          decoration: textBold == FontWeight.bold
+                              ? const ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : const ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_bold),
+                            tooltip: 'Bold',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (textBold == FontWeight.normal) {
+                                  textBold = FontWeight.bold;
+                                } else {
+                                  textBold = FontWeight.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: textItalic == FontStyle.italic
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  shape: CircleBorder(),
+                                  color: Colors.transparent),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_italic),
+                            tooltip: 'Italic',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (textItalic == FontStyle.normal) {
+                                  textItalic = FontStyle.italic;
+                                } else {
+                                  textItalic = FontStyle.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: textUnderLine == TextDecoration.underline
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_underline),
+                            tooltip: 'Underline',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (textUnderLine == TextDecoration.none) {
+                                  textUnderLine = TextDecoration.underline;
+                                } else {
+                                  textUnderLine = TextDecoration.none;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Font Color"),
+                          child: Text("Text Color"),
                         ),
                         Expanded(
                           flex: 2,
@@ -416,7 +703,7 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                             child: Text(
                               "Pick Font Color",
                               style: TextStyle(
-                                color: widget.textColor,
+                                color: widget.txtColor1,
                               ),
                             ),
                             onPressed: () {
@@ -426,35 +713,15 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text("Selected Font Color"),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: TextButton(
-                            child: Text(
-                              "Pick Selected Font Color",
-                              style: TextStyle(
-                                color: widget.selectedFontColor,
-                              ),
-                            ),
-                            onPressed: () {
-                              pickColor(context, "Pick Selected Font Color", 2);
-                            },
-                          ),
-                        ),
-                      ],
+                    SizedBox(
+                      height: 10.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("background Color"),
+                          child: Text("Text BG Color"),
                         ),
                         Expanded(
                           flex: 2,
@@ -469,12 +736,45 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("DropDown Color"),
+                          child: Text("Selected Color"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            child: Text(
+                              "Pick Selected Font Color",
+                              style: TextStyle(
+                                color: widget.selectedColor1,
+                              ),
+                            ),
+                            onPressed: () {
+                              pickColor(context, "Pick Selected Font Color", 6);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 3.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Field BG Color"),
                         ),
                         Expanded(
                           flex: 2,
@@ -483,7 +783,7 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                               "Pick Background Color",
                             ),
                             onPressed: () {
-                              pickColor(context, "Pick Background Color", 3);
+                              pickColor(context, "Pick Background Color", 5);
                             },
                           ),
                         ),
@@ -533,7 +833,30 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                   widget.itemString = items.text;
                   widget.textFieldName = fieldNameController.text;
                   disappearsetValue = disappearvalue;
-                  selectedsetddalign = selectedddalign;
+                  selectedsetrbAlign = selectedrbAlign;
+
+                  widget.fontSizeFieldName =
+                      double.parse(fontSizeFieldNameController.text);
+                  selectedsetSize = selectedSize;
+
+                  widget.txtColor2 = widget.txtColor1;
+                  widget.textbgColor2 = widget.textbgColor1;
+
+                  widget.fieldColor2 = widget.fieldColor1;
+                  widget.fieldbgColor2 = widget.fieldbgColor1;
+
+                  widget.selectedColor2 = widget.selectedColor1;
+
+                  widget.bgColorAll2 = widget.bgColorAll1;
+
+                  textSetBold = textBold;
+                  textSetItalic = textItalic;
+                  textSetUnderLine = textUnderLine;
+
+                  fieldSetBold = fieldBold;
+                  fieldSetItalic = fieldItalic;
+                  fieldSetUnderLine = fieldUnderLine;
+
                   if (widget.itemString == null || widget.itemString == "") {
                     widget.itemString =
                         " Sample 1, Sample 2, Sample 3, Sample 4";
@@ -552,12 +875,12 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                     }
                   }
                   widget.fontSize = double.parse(fontSize.text);
-                  widget.defaultSelect = int.parse(selectedElement.text);
-                  if (widget.defaultSelect < widget.items.length) {
-                    defaultItem = widget.items[widget.defaultSelect];
+                  widget.selectedItem = int.parse(selectedElement.text);
+                  if (widget.selectedItem < widget.items.length) {
+                    defaultItem = widget.items[widget.selectedItem];
                   } else {
-                    widget.defaultSelect = 0;
-                    defaultItem = widget.items[widget.defaultSelect];
+                    widget.selectedItem = 0;
+                    defaultItem = widget.items[widget.selectedItem];
                   }
                   mandotorysetValue = mandotoryvalue;
                   selectedsetfieldalign = selectedfieldalign;
@@ -581,12 +904,12 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                     widget.fieldsize =
                         MediaQuery.of(context).size.width * widget.customWidth;
                   }
-                  if (selectedddalign == "Left") {
-                    widget.ddAlign = CrossAxisAlignment.start;
-                  } else if (selectedddalign == "Center") {
-                    widget.ddAlign = CrossAxisAlignment.center;
-                  } else if (selectedddalign == "Right") {
-                    widget.ddAlign = CrossAxisAlignment.end;
+                  if (selectedrbAlign == "Left") {
+                    widget.rbAlignmnt = CrossAxisAlignment.start;
+                  } else if (selectedrbAlign == "Center") {
+                    widget.rbAlignmnt = CrossAxisAlignment.center;
+                  } else if (selectedrbAlign == "Right") {
+                    widget.rbAlignmnt = CrossAxisAlignment.end;
                   }
                 });
               },
@@ -601,21 +924,30 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                     AppConstants.elementsList.add(ElementTypes(
                         elementName: "RadioButton",
                         element: FbRadioButton(
-                          dropDownColor: widget.dropDownColor,
                           fontSize: widget.fontSize,
-                          textColor: widget.textColor,
                           fieldsize: widget.fieldsize,
                           fieldAlignM: widget.fieldAlignM,
                           customHeight: widget.customHeight,
                           customWidth: widget.customWidth,
-                          ddAlign: widget.ddAlign,
+                          rbAlignmnt: widget.rbAlignmnt,
                           textFieldName: widget.textFieldName,
                           textHidedName: widget.textHidedName,
-                          bgColor: widget.bgColor,
-                          defaultSelect: widget.defaultSelect,
-                          selectedFontColor: widget.selectedFontColor,
+                          bgColorAll2: widget.bgColorAll2,
+                          selectedItem: widget.selectedItem,
+                          selectedColor1: widget.selectedColor1,
+                          txtColor1: widget.txtColor1,
+                          bgColorAll1: widget.bgColorAll1,
+                          fieldColor1: widget.fieldColor1,
+                          fieldColor2: widget.fieldColor2,
+                          fieldbgColor1: widget.fieldbgColor1,
+                          fieldbgColor2: widget.fieldbgColor2,
+                          fontSizeFieldName: widget.fontSizeFieldName,
+                          textbgColor1: widget.textbgColor1,
+                          textbgColor2: widget.textbgColor2,
+                          txtColor2: widget.txtColor2,
+                          selectedColor2: widget.selectedColor2,
                         ),
-                        elementId: "Radio Button${AppConstants.elementID}"));
+                        elementId: "Radio${AppConstants.elementID}"));
                   });
                 }),
             TextButton(
@@ -634,9 +966,22 @@ class _FbRadioButtonState extends State<FbRadioButton> {
                     if (disappearsetValue != disappearvalue) {
                       disappearvalue = disappearsetValue;
                     }
-                    if (selectedsetddalign != selectedddalign) {
-                      selectedddalign = selectedsetddalign;
+                    if (selectedsetrbAlign != selectedrbAlign) {
+                      selectedrbAlign = selectedsetrbAlign;
                     }
+
+                    widget.txtColor1 = widget.txtColor2;
+                    widget.textbgColor1 = widget.textbgColor2;
+                    widget.fieldColor1 = widget.fieldColor2;
+                    widget.fieldbgColor1 = widget.fieldbgColor2;
+
+                    textBold = textSetBold;
+                    textItalic = textSetItalic;
+                    textUnderLine = textSetUnderLine;
+
+                    fieldBold = fieldSetBold;
+                    fieldItalic = fieldSetItalic;
+                    fieldUnderLine = fieldSetUnderLine;
                   });
                 },
                 child: const Text(
@@ -671,13 +1016,33 @@ class _FbRadioButtonState extends State<FbRadioButton> {
   Widget buildPicker(int key) {
     if (key == 1) {
       return ColorPicker(
-          pickerColor: widget.textColor,
-          onColorChanged: (color) => setState(() => widget.textColor = color));
+          pickerColor: widget.txtColor1!,
+          onColorChanged: (color) => setState(() => widget.txtColor1 = color));
+    } else if (key == 2) {
+      return ColorPicker(
+          pickerColor: widget.textbgColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.textbgColor1 = color));
+    } else if (key == 3) {
+      return ColorPicker(
+          pickerColor: widget.fieldColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.fieldColor1 = color));
+    } else if (key == 4) {
+      return ColorPicker(
+          pickerColor: widget.fieldbgColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.fieldbgColor1 = color));
+    } else if (key == 5) {
+      return ColorPicker(
+          pickerColor: widget.bgColorAll1!,
+          onColorChanged: (color) =>
+              setState(() => widget.bgColorAll1 = color));
     } else {
       return ColorPicker(
-          pickerColor: widget.selectedFontColor,
+          pickerColor: widget.selectedColor1!,
           onColorChanged: (color) =>
-              setState(() => widget.selectedFontColor = color));
+              setState(() => widget.selectedColor1 = color));
     }
   }
 }

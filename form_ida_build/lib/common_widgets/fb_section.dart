@@ -6,6 +6,7 @@ import 'package:form_ida_build/common_widgets/advanced/check_box.dart';
 import 'package:form_ida_build/common_widgets/advanced/drop_down.dart';
 import 'package:form_ida_build/common_widgets/advanced/font_import.dart';
 import 'package:form_ida_build/common_widgets/advanced/radio_button.dart';
+import 'package:form_ida_build/utils/app_constants.dart';
 
 class FbSection extends StatefulWidget {
   List<String> sizeCheck = <String>["Small", "Medium", "Large", "Custom"];
@@ -116,7 +117,7 @@ class _FbSectionState extends State<FbSection> {
         ),
         width: widget.fieldsize,
         height: MediaQuery.of(context).size.height * widget.customHeight,
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, //widget.txtAlign,
           children: [
@@ -194,7 +195,7 @@ class _FbSectionState extends State<FbSection> {
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(0, 24.0, 0, 24.0),
-          title: Text('Text Property Window'),
+          title: Text('Section Property Window'),
           content: Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: EdgeInsets.all(8.0),
@@ -686,6 +687,26 @@ class _FbSectionState extends State<FbSection> {
                   if (impFont != impSetFont) {
                     impSetFont = impFont;
                   }
+                });
+              },
+            ),
+            TextButton(
+              child: const Text('Duplicate', style: TextStyle(fontSize: 15.0)),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  AppConstants.elementsList.add(ElementTypes(
+                      elementName: "Section",
+                      element: FbSection(
+                        customHeight: widget.customHeight,
+                        customWidth: widget.customWidth,
+                        fieldAlignM: widget.fieldAlignM,
+                        fieldsize: widget.fieldsize,
+                        fontSize: widget.fontSize,
+                        textFieldName: widget.textFieldName,
+                        textHidedName: widget.textHidedName,
+                      ),
+                      elementId: "Section${AppConstants.elementID}"));
                 });
               },
             ),

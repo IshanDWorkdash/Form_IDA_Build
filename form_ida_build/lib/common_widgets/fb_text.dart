@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:form_ida_build/utils/app_constants.dart';
+import 'package:restart_app/restart_app.dart';
 
 // enum TextAlignmentsEnum {
 //   LEFT,
@@ -19,16 +20,19 @@ class FbText extends StatefulWidget {
   TextDirection? textDirection;
   int? maxLines;
   static bool mandatory = false;
+  Color? txtColor;
+  Color? bgColor;
 
-  FbText({
-    this.text = "Sample Text",
-    this.fontSize = 15.0,
-    this.color = Colors.black,
-    this.backgroundColor = Colors.white,
-    this.textAlign = TextAlign.left,
-    this.textDirection,
-    this.maxLines,
-  });
+  FbText(
+      {this.text = "Sample Text",
+      this.fontSize = 15.0,
+      this.color = Colors.black,
+      this.backgroundColor = Colors.white,
+      this.textAlign = TextAlign.left,
+      this.textDirection,
+      this.maxLines,
+      this.txtColor = Colors.black,
+      this.bgColor = Colors.white});
 
   @override
   _FbTextState createState() => _FbTextState();
@@ -62,14 +66,16 @@ class _FbTextState extends State<FbText> {
       },
       child: Container(
           width: double.infinity,
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.symmetric(horizontal: 12.0),
           child: Text(
             widget.text,
             style: TextStyle(
-              color: widget.color,
-              backgroundColor: widget.backgroundColor,
-              fontSize: widget.fontSize,
-            ),
+                color: widget.txtColor,
+                backgroundColor: widget.bgColor,
+                fontSize: widget.fontSize,
+                fontWeight: textBold,
+                fontStyle: textItalic,
+                decoration: textUnderLine),
             textAlign: widget.textAlign,
             textDirection: widget.textDirection,
             maxLines: widget.maxLines,
@@ -380,6 +386,12 @@ class _FbTextState extends State<FbText> {
                     widget.textAlign = TextAlign.right;
                   }
                   mandotorysetValue = mandotoryvalue;
+                  widget.txtColor = widget.color;
+                  widget.bgColor = widget.backgroundColor;
+
+                  textSetBold = textBold;
+                  textSetItalic = textItalic;
+                  textSetUnderLine = textUnderLine;
                 });
               },
             ),
@@ -388,6 +400,8 @@ class _FbTextState extends State<FbText> {
               onPressed: () {
                 Navigator.of(context).pop();
                 setState(() {
+                  widget.txtColor = widget.color;
+                  widget.bgColor = widget.backgroundColor;
                   AppConstants.elementsList.add(ElementTypes(
                       elementName: "Text",
                       element: FbText(
@@ -398,9 +412,12 @@ class _FbTextState extends State<FbText> {
                         maxLines: widget.maxLines,
                         textAlign: widget.textAlign,
                         textDirection: widget.textDirection,
+                        txtColor: widget.txtColor,
+                        bgColor: widget.bgColor,
                       ),
                       elementId: "Text${AppConstants.elementID}"));
                 });
+                // Restart.restartApp();
               },
             ),
             TextButton(
@@ -413,6 +430,17 @@ class _FbTextState extends State<FbText> {
                     if (mandotorysetValue != mandotoryvalue) {
                       mandotoryvalue = mandotorysetValue;
                     }
+                    if (textSetBold != textBold) {
+                      textBold = textSetBold;
+                    }
+                    if (textSetItalic != textItalic) {
+                      textItalic = textSetItalic;
+                    }
+                    if (textSetUnderLine != textUnderLine) {
+                      textUnderLine = textSetUnderLine;
+                    }
+                    widget.color = widget.txtColor;
+                    widget.backgroundColor = widget.bgColor;
                   });
                 },
                 child: const Text(

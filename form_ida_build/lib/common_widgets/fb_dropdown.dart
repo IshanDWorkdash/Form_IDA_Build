@@ -5,37 +5,60 @@ import 'package:form_ida_build/utils/app_constants.dart';
 
 class FbDropDown extends StatefulWidget {
   List<String> items = <String>[];
-  String itemString = "Sample 1, Sample 2, Sample 3, Sample 4";
+  String itemString;
   int selectedItem;
-  Color dropDownColor;
-  Color bgColor;
   double fontSize;
-  Color textColor;
   List<String> sizeCheck = <String>["Small", "Medium", "Large", "Custom"];
   double? fieldsize;
   List<String> fieldalign = <String>["Left", "Center", "Right"];
-  List<String> ddalign = <String>["Left", "Center", "Right"];
+  List<String> fNameAlign = <String>["Left", "Center", "Right"];
   Alignment fieldAlignM;
   num customWidth;
   num customHeight;
   String textFieldName;
   String textHidedName;
-  CrossAxisAlignment ddAlign;
+  CrossAxisAlignment fNAlign;
+  double? fontSizeFieldName;
+
+  Color? txtColor1;
+  Color? textbgColor1;
+  Color? txtColor2;
+  Color? textbgColor2;
+
+  Color? fieldColor1;
+  Color? fieldbgColor1;
+  Color? fieldColor2;
+  Color? fieldbgColor2;
+
+  Color? bgColorAll1;
+  Color? bgColorAll2;
+  Color? ddbgColor1;
+  Color? ddbgColor2;
 
   FbDropDown({
     this.textFieldName = "Filed Name",
     this.textHidedName = "",
     this.selectedItem = 0,
-    this.dropDownColor = Colors.white,
-    this.bgColor = Colors.white,
     this.fontSize = 13.0,
-    this.textColor = Colors.black87,
-    this.itemString = "Sample 1, Sample 2, Sample 3, Sample 4",
+    this.fontSizeFieldName = 15.0,
+    this.itemString = " Sample 1, Sample 2, Sample 3, Sample 4",
     this.fieldsize = double.infinity,
     this.fieldAlignM = Alignment.centerLeft,
     this.customWidth = 0.9,
     this.customHeight = 0.11,
-    this.ddAlign = CrossAxisAlignment.start,
+    this.fNAlign = CrossAxisAlignment.start,
+    this.txtColor1 = Colors.black,
+    this.textbgColor1 = Colors.white60,
+    this.fieldColor1 = Colors.black,
+    this.fieldbgColor1 = Colors.white,
+    this.bgColorAll1 = Colors.white,
+    this.txtColor2 = Colors.black,
+    this.textbgColor2 = Colors.white,
+    this.fieldColor2 = Colors.black,
+    this.fieldbgColor2 = Colors.white,
+    this.bgColorAll2 = Colors.white,
+    this.ddbgColor1 = Colors.white,
+    this.ddbgColor2 = Colors.white,
   });
 
   @override
@@ -43,8 +66,8 @@ class FbDropDown extends StatefulWidget {
 }
 
 class _FbDropDownState extends State<FbDropDown> {
-  bool disappearvalue = false;
-  bool disappearsetValue = false;
+  bool disappearvalue = true;
+  bool disappearsetValue = true;
 
   bool mandotoryvalue = false;
   bool mandotorysetValue = false;
@@ -55,8 +78,26 @@ class _FbDropDownState extends State<FbDropDown> {
   String selectedfieldalign = "Left";
   String selectedsetfieldalign = "Left";
 
-  String selectedddalign = "Left";
-  String selectedsetddalign = "Left";
+  String selectedFNameAlign = "Left";
+  String selectedsetFNameAlign = "Left";
+
+  FontWeight textBold = FontWeight.normal;
+  FontWeight textSetBold = FontWeight.normal;
+
+  FontStyle textItalic = FontStyle.normal;
+  FontStyle textSetItalic = FontStyle.normal;
+
+  TextDecoration textUnderLine = TextDecoration.none;
+  TextDecoration textSetUnderLine = TextDecoration.none;
+
+  FontWeight fieldBold = FontWeight.normal;
+  FontWeight fieldSetBold = FontWeight.normal;
+
+  FontStyle fieldItalic = FontStyle.normal;
+  FontStyle fieldSetItalic = FontStyle.normal;
+
+  TextDecoration fieldUnderLine = TextDecoration.none;
+  TextDecoration fieldSetUnderLine = TextDecoration.none;
 
   @override
   void initState() {
@@ -76,32 +117,42 @@ class _FbDropDownState extends State<FbDropDown> {
           width: widget.fieldsize,
           height: MediaQuery.of(context).size.height * widget.customHeight,
           decoration: BoxDecoration(
-            color: widget.bgColor,
+            color: widget.bgColorAll2,
             borderRadius: BorderRadius.circular(12.0),
             border: Border.all(color: Colors.blueAccent),
           ),
           padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(crossAxisAlignment: widget.ddAlign, children: [
+          child: Column(crossAxisAlignment: widget.fNAlign, children: [
+            SizedBox(
+              height: 8.0,
+            ),
             Text(
               disappearvalue == true
                   ? widget.textFieldName
                   : widget.textHidedName,
-            ),
-            SizedBox(
-              height: 12.0,
+              style: TextStyle(
+                  color: widget.fieldColor2,
+                  backgroundColor: widget.fieldbgColor2,
+                  fontSize: widget.fontSizeFieldName,
+                  fontWeight: fieldBold,
+                  fontStyle: fieldItalic,
+                  decoration: fieldUnderLine),
             ),
             DropdownButtonFormField<String>(
               value: widget.items[widget.selectedItem],
-              dropdownColor: widget.dropDownColor,
+              dropdownColor: widget.ddbgColor2,
               items: widget.items.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(
                     value,
                     style: TextStyle(
-                      fontSize: widget.fontSize,
-                      color: widget.textColor,
-                    ),
+                        fontSize: widget.fontSize,
+                        color: widget.txtColor2,
+                        backgroundColor: widget.textbgColor2,
+                        fontWeight: textBold,
+                        fontStyle: textItalic,
+                        decoration: textUnderLine),
                   ),
                 );
               }).toList(),
@@ -114,18 +165,24 @@ class _FbDropDownState extends State<FbDropDown> {
   }
 
   Future<void> showMyDialog() async {
-    TextEditingController fieldNameController = new TextEditingController();
     TextEditingController items = new TextEditingController();
     TextEditingController fontSize = new TextEditingController();
+    TextEditingController fieldNameController = new TextEditingController();
     TextEditingController selectedElement = new TextEditingController();
     TextEditingController customWidthController = new TextEditingController();
     TextEditingController customHeightController = new TextEditingController();
+    TextEditingController fontSizeController = new TextEditingController();
+    TextEditingController fontSizeFieldNameController =
+        new TextEditingController();
+    items.text = widget.itemString;
+    fontSize.text = widget.fontSize.toString();
     fieldNameController.text = widget.textFieldName;
+    selectedElement.text = widget.selectedItem.toString();
     customWidthController.text = widget.customWidth.toString();
     customHeightController.text = widget.customHeight.toString();
-    items.text = widget.itemString;
-    selectedElement.text = widget.selectedItem.toString();
-    fontSize.text = widget.fontSize.toString();
+    fontSizeController.text = widget.fontSize.toString();
+    fontSizeFieldNameController.text = widget.fontSizeFieldName.toString();
+
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -141,27 +198,26 @@ class _FbDropDownState extends State<FbDropDown> {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        Text("   Field Name",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
+                              flex: 1,
+                              child: Text("Filed Name"),
+                            ),
+                            Expanded(
+                              flex: 2,
                               child: TextField(
                                 controller: fieldNameController,
                               ),
                             ),
-                            SizedBox(
-                              width: 20.0,
-                            ),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
                                       Text(
-                                        "Hide  ",
+                                        "  Hide   ",
                                         style: TextStyle(
                                             color: Colors.deepOrangeAccent,
                                             fontSize: 10.0),
@@ -194,18 +250,33 @@ class _FbDropDownState extends State<FbDropDown> {
                             )
                           ],
                         ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Text("Items List"),
+                              child: Text("Field Name Alignment"),
                             ),
                             Expanded(
                               flex: 2,
-                              child: TextField(
-                                controller: items,
-                              ),
+                              child: DropdownButtonFormField<String>(
+                                  value: selectedFNameAlign,
+                                  items: widget.fNameAlign.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    _setState(() {
+                                      selectedFNameAlign = newValue!;
+                                    });
+                                  }),
                             ),
                           ],
                         ),
@@ -228,7 +299,6 @@ class _FbDropDownState extends State<FbDropDown> {
                                   }).toList(),
                                   onChanged: (newValue) {
                                     _setState(() {
-                                      print(newValue);
                                       selectedSize = newValue!;
                                     });
                                   }),
@@ -282,6 +352,7 @@ class _FbDropDownState extends State<FbDropDown> {
                           children: [
                             Expanded(flex: 1, child: Text("Field Alignment")),
                             Expanded(
+                              flex: 2,
                               child: DropdownButtonFormField<String>(
                                   value: selectedfieldalign,
                                   items: widget.fieldalign.map((String value) {
@@ -305,24 +376,164 @@ class _FbDropDownState extends State<FbDropDown> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Text("Dropdown Alignment"),
+                              child: Text("Field Font Size"),
                             ),
                             Expanded(
-                              child: DropdownButtonFormField<String>(
-                                  value: selectedddalign,
-                                  items: widget.ddalign.map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        value,
-                                      ),
-                                    );
-                                  }).toList(),
-                                  onChanged: (newValue) {
-                                    _setState(() {
-                                      selectedddalign = newValue!;
-                                    });
-                                  }),
+                              flex: 2,
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                controller: fontSizeFieldNameController,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 90.0),
+                            Ink(
+                              decoration: fieldBold == FontWeight.bold
+                                  ? const ShapeDecoration(
+                                      color: Colors.grey, shape: CircleBorder())
+                                  : const ShapeDecoration(
+                                      color: Colors.transparent,
+                                      shape: CircleBorder()),
+                              child: IconButton(
+                                icon: const Icon(Icons.format_bold),
+                                tooltip: 'Bold',
+                                splashColor: Colors.grey,
+                                highlightColor: Colors.grey,
+                                onPressed: () {
+                                  _setState(() {
+                                    if (fieldBold == FontWeight.normal) {
+                                      fieldBold = FontWeight.bold;
+                                    } else {
+                                      fieldBold = FontWeight.normal;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10.0),
+                            Ink(
+                              decoration: fieldItalic == FontStyle.italic
+                                  ? ShapeDecoration(
+                                      color: Colors.grey, shape: CircleBorder())
+                                  : ShapeDecoration(
+                                      shape: CircleBorder(),
+                                      color: Colors.transparent),
+                              child: IconButton(
+                                icon: const Icon(Icons.format_italic),
+                                tooltip: 'Italic',
+                                splashColor: Colors.grey,
+                                highlightColor: Colors.grey,
+                                onPressed: () {
+                                  _setState(() {
+                                    if (fieldItalic == FontStyle.normal) {
+                                      fieldItalic = FontStyle.italic;
+                                    } else {
+                                      fieldItalic = FontStyle.normal;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10.0),
+                            Ink(
+                              decoration:
+                                  fieldUnderLine == TextDecoration.underline
+                                      ? ShapeDecoration(
+                                          color: Colors.grey,
+                                          shape: CircleBorder())
+                                      : ShapeDecoration(
+                                          color: Colors.transparent,
+                                          shape: CircleBorder()),
+                              child: IconButton(
+                                icon: const Icon(Icons.format_underline),
+                                tooltip: 'Underline',
+                                splashColor: Colors.grey,
+                                highlightColor: Colors.grey,
+                                onPressed: () {
+                                  _setState(() {
+                                    if (fieldUnderLine == TextDecoration.none) {
+                                      fieldUnderLine = TextDecoration.underline;
+                                    } else {
+                                      fieldUnderLine = TextDecoration.none;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text("Field Name Color"),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: TextButton(
+                                child: Text(
+                                  "Pick Font Color",
+                                  style: TextStyle(
+                                    color: widget.fieldColor1,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  pickColor(context, "Pick Font Color", 3);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text("Field Name BG Color"),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: TextButton(
+                                child: Text(
+                                  "Pick Background Color",
+                                ),
+                                onPressed: () {
+                                  pickColor(
+                                      context, "Pick Background Color", 4);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text("Items List"),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: TextField(
+                                controller: items,
+                              ),
                             ),
                           ],
                         ),
@@ -347,7 +558,7 @@ class _FbDropDownState extends State<FbDropDown> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Text("Font Size"),
+                              child: Text("Text Font Size"),
                             ),
                             Expanded(
                               flex: 2,
@@ -358,15 +569,93 @@ class _FbDropDownState extends State<FbDropDown> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 25.0,
+                        SizedBox(height: 5.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 90.0),
+                            Ink(
+                              decoration: textBold == FontWeight.bold
+                                  ? const ShapeDecoration(
+                                      color: Colors.grey, shape: CircleBorder())
+                                  : const ShapeDecoration(
+                                      color: Colors.transparent,
+                                      shape: CircleBorder()),
+                              child: IconButton(
+                                icon: const Icon(Icons.format_bold),
+                                tooltip: 'Bold',
+                                splashColor: Colors.grey,
+                                highlightColor: Colors.grey,
+                                onPressed: () {
+                                  _setState(() {
+                                    if (textBold == FontWeight.normal) {
+                                      textBold = FontWeight.bold;
+                                    } else {
+                                      textBold = FontWeight.normal;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10.0),
+                            Ink(
+                              decoration: textItalic == FontStyle.italic
+                                  ? ShapeDecoration(
+                                      color: Colors.grey, shape: CircleBorder())
+                                  : ShapeDecoration(
+                                      shape: CircleBorder(),
+                                      color: Colors.transparent),
+                              child: IconButton(
+                                icon: const Icon(Icons.format_italic),
+                                tooltip: 'Italic',
+                                splashColor: Colors.grey,
+                                highlightColor: Colors.grey,
+                                onPressed: () {
+                                  _setState(() {
+                                    if (textItalic == FontStyle.normal) {
+                                      textItalic = FontStyle.italic;
+                                    } else {
+                                      textItalic = FontStyle.normal;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10.0),
+                            Ink(
+                              decoration:
+                                  textUnderLine == TextDecoration.underline
+                                      ? ShapeDecoration(
+                                          color: Colors.grey,
+                                          shape: CircleBorder())
+                                      : ShapeDecoration(
+                                          color: Colors.transparent,
+                                          shape: CircleBorder()),
+                              child: IconButton(
+                                icon: const Icon(Icons.format_underline),
+                                tooltip: 'Underline',
+                                splashColor: Colors.grey,
+                                highlightColor: Colors.grey,
+                                onPressed: () {
+                                  _setState(() {
+                                    if (textUnderLine == TextDecoration.none) {
+                                      textUnderLine = TextDecoration.underline;
+                                    } else {
+                                      textUnderLine = TextDecoration.none;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
+                        SizedBox(height: 5.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Text("Font Color"),
+                              child: Text("Text Color"),
                             ),
                             Expanded(
                               flex: 2,
@@ -374,7 +663,7 @@ class _FbDropDownState extends State<FbDropDown> {
                                 child: Text(
                                   "Pick Font Color",
                                   style: TextStyle(
-                                    color: widget.textColor,
+                                    color: widget.txtColor1,
                                   ),
                                 ),
                                 onPressed: () {
@@ -389,7 +678,7 @@ class _FbDropDownState extends State<FbDropDown> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Text("background Color"),
+                              child: Text("Text BG Color"),
                             ),
                             Expanded(
                               flex: 2,
@@ -410,7 +699,7 @@ class _FbDropDownState extends State<FbDropDown> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Text("DropDown Color"),
+                              child: Text("DropDown BG Color"),
                             ),
                             Expanded(
                               flex: 2,
@@ -420,14 +709,39 @@ class _FbDropDownState extends State<FbDropDown> {
                                 ),
                                 onPressed: () {
                                   pickColor(
-                                      context, "Pick Background Color", 3);
+                                      context, "Pick Background Color", 5);
                                 },
                               ),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 8.0,
+                          height: 5.0,
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text("Field BG Color"),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: TextButton(
+                                child: Text(
+                                  "Pick Background Color",
+                                ),
+                                onPressed: () {
+                                  pickColor(
+                                      context, "Pick Background Color", 6);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -471,7 +785,28 @@ class _FbDropDownState extends State<FbDropDown> {
                     widget.itemString = items.text;
                     widget.textFieldName = fieldNameController.text;
                     disappearsetValue = disappearvalue;
-                    selectedsetddalign = selectedddalign;
+                    selectedsetFNameAlign = selectedFNameAlign;
+                    widget.fontSizeFieldName =
+                        double.parse(fontSizeFieldNameController.text);
+                    selectedsetSize = selectedSize;
+
+                    widget.txtColor2 = widget.txtColor1;
+                    widget.textbgColor2 = widget.textbgColor1;
+
+                    widget.fieldColor2 = widget.fieldColor1;
+                    widget.fieldbgColor2 = widget.fieldbgColor1;
+
+                    widget.ddbgColor2 = widget.ddbgColor1;
+                    widget.bgColorAll2 = widget.bgColorAll1;
+
+                    textSetBold = textBold;
+                    textSetItalic = textItalic;
+                    textSetUnderLine = textUnderLine;
+
+                    fieldSetBold = fieldBold;
+                    fieldSetItalic = fieldItalic;
+                    fieldSetUnderLine = fieldUnderLine;
+
                     if (widget.itemString == null || widget.itemString == "") {
                       widget.itemString =
                           "Sample 1, Sample 2, Sample 3, Sample 4";
@@ -511,12 +846,12 @@ class _FbDropDownState extends State<FbDropDown> {
                       widget.fieldsize = MediaQuery.of(context).size.width *
                           widget.customWidth;
                     }
-                    if (selectedddalign == "Left") {
-                      widget.ddAlign = CrossAxisAlignment.start;
-                    } else if (selectedddalign == "Center") {
-                      widget.ddAlign = CrossAxisAlignment.center;
-                    } else if (selectedddalign == "Right") {
-                      widget.ddAlign = CrossAxisAlignment.end;
+                    if (selectedFNameAlign == "Left") {
+                      widget.fNAlign = CrossAxisAlignment.start;
+                    } else if (selectedFNameAlign == "Center") {
+                      widget.fNAlign = CrossAxisAlignment.center;
+                    } else if (selectedFNameAlign == "Right") {
+                      widget.fNAlign = CrossAxisAlignment.end;
                     }
                   });
                 },
@@ -532,20 +867,30 @@ class _FbDropDownState extends State<FbDropDown> {
                           elementName: "Dropdown",
                           element: FbDropDown(
                             selectedItem: widget.selectedItem,
-                            dropDownColor: widget.dropDownColor,
                             fontSize: widget.fontSize,
-                            textColor: widget.textColor,
+                            txtColor1: widget.txtColor1,
                             itemString: widget.itemString,
                             fieldsize: widget.fieldsize,
                             fieldAlignM: widget.fieldAlignM,
                             customHeight: widget.customHeight,
                             customWidth: widget.customWidth,
-                            ddAlign: widget.ddAlign,
+                            fNAlign: widget.fNAlign,
                             textFieldName: widget.textFieldName,
                             textHidedName: widget.textHidedName,
-                            bgColor: widget.bgColor,
+                            bgColorAll2: widget.bgColorAll2,
+                            ddbgColor1: widget.ddbgColor1,
+                            bgColorAll1: widget.bgColorAll1,
+                            ddbgColor2: widget.ddbgColor2,
+                            fieldColor1: widget.fieldColor1,
+                            fieldColor2: widget.fieldColor2,
+                            fieldbgColor1: widget.fieldbgColor1,
+                            fieldbgColor2: widget.fieldbgColor2,
+                            fontSizeFieldName: widget.fontSizeFieldName,
+                            textbgColor1: widget.textbgColor1,
+                            textbgColor2: widget.textbgColor2,
+                            txtColor2: widget.txtColor2,
                           ),
-                          elementId: "Drop Down${AppConstants.elementID}"));
+                          elementId: "Drop${AppConstants.elementID}"));
                     });
                   }),
               TextButton(
@@ -564,9 +909,22 @@ class _FbDropDownState extends State<FbDropDown> {
                       if (disappearsetValue != disappearvalue) {
                         disappearvalue = disappearsetValue;
                       }
-                      if (selectedsetddalign != selectedddalign) {
-                        selectedddalign = selectedsetddalign;
+                      if (selectedsetFNameAlign != selectedFNameAlign) {
+                        selectedFNameAlign = selectedsetFNameAlign;
                       }
+
+                      widget.txtColor1 = widget.txtColor2;
+                      widget.textbgColor1 = widget.textbgColor2;
+                      widget.fieldColor1 = widget.fieldColor2;
+                      widget.fieldbgColor1 = widget.fieldbgColor2;
+
+                      textBold = textSetBold;
+                      textItalic = textSetItalic;
+                      textUnderLine = textSetUnderLine;
+
+                      fieldBold = fieldSetBold;
+                      fieldItalic = fieldSetItalic;
+                      fieldUnderLine = fieldSetUnderLine;
                     });
                   },
                   child: const Text(
@@ -600,17 +958,32 @@ class _FbDropDownState extends State<FbDropDown> {
   Widget buildPicker(int key) {
     if (key == 1) {
       return ColorPicker(
-          pickerColor: widget.textColor,
-          onColorChanged: (color) => setState(() => widget.textColor = color));
+          pickerColor: widget.txtColor1!,
+          onColorChanged: (color) => setState(() => widget.txtColor1 = color));
     } else if (key == 2) {
       return ColorPicker(
-          pickerColor: widget.bgColor,
-          onColorChanged: (color) => setState(() => widget.bgColor = color));
+          pickerColor: widget.textbgColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.textbgColor1 = color));
+    } else if (key == 3) {
+      return ColorPicker(
+          pickerColor: widget.fieldColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.fieldColor1 = color));
+    } else if (key == 4) {
+      return ColorPicker(
+          pickerColor: widget.fieldbgColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.fieldbgColor1 = color));
+    } else if (key == 5) {
+      return ColorPicker(
+          pickerColor: widget.ddbgColor1!,
+          onColorChanged: (color) => setState(() => widget.ddbgColor1 = color));
     } else {
       return ColorPicker(
-          pickerColor: widget.dropDownColor,
+          pickerColor: widget.bgColorAll1!,
           onColorChanged: (color) =>
-              setState(() => widget.dropDownColor = color));
+              setState(() => widget.bgColorAll1 = color));
     }
   }
 }

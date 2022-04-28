@@ -15,8 +15,9 @@ class AppConstants {
     FieldTypes(type: "Calculated Value", key: 11),
     FieldTypes(type: "Tables", key: 12),
     FieldTypes(type: "Information", key: 13),
-    FieldTypes(type: "Lookup", key: 14),
-    FieldTypes(type: "Section", key: 15),
+    FieldTypes(type: "Section", key: 14),
+    FieldTypes(type: "Refresh", key: 15),
+    FieldTypes(type: "Space", key: 16),
   ];
 
   static int elementID = 1;

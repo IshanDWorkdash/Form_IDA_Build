@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:form_ida_build/common_widgets/advanced/fb_camera_image.dart';
+import 'package:form_ida_build/utils/app_constants.dart';
 
 class FbInformation extends StatefulWidget {
   List<String> sizeCheck = <String>["Small", "Medium", "Large", "Custom"];
@@ -118,7 +119,7 @@ class _FbInformationState extends State<FbInformation> {
               ]),
           width: widget.fieldsize,
           height: MediaQuery.of(context).size.height * widget.customHeight,
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.symmetric(horizontal: 12.0),
           child: Column(
             crossAxisAlignment: widget.txtAlign,
             children: [
@@ -132,20 +133,20 @@ class _FbInformationState extends State<FbInformation> {
               ),
               selectedFieldType == "Text"
                   ? Text(
-                widget.text,
-                // textAlign: widget.textAlign,
-                style: TextStyle(
-                  fontSize: widget.fontSize,
-                  color: selectedfontColor,
-                ),
-              )
+                      widget.text,
+                      // textAlign: widget.textAlign,
+                      style: TextStyle(
+                        fontSize: widget.fontSize,
+                        color: selectedfontColor,
+                      ),
+                    )
                   : selectedFieldType == "Web Link"
-                  ? Text(widget.webLink)
-                  : Container(
-                  child: FbCameraView(
-                      custWidth: widget.mediaWidth,
-                      custHeight: widget.mediaHeight,
-                      mBorderWidth: widget.mediaBorderWidth))
+                      ? Text(widget.webLink)
+                      : Container(
+                          child: FbCameraView(
+                              custWidth: widget.mediaWidth,
+                              custHeight: widget.mediaHeight,
+                              mBorderWidth: widget.mediaBorderWidth))
             ],
           ),
         ),
@@ -163,7 +164,7 @@ class _FbInformationState extends State<FbInformation> {
     TextEditingController mediaWidthController = new TextEditingController();
     TextEditingController mediaHeightController = new TextEditingController();
     TextEditingController mediaBorderWidthController =
-    new TextEditingController();
+        new TextEditingController();
     webLinkController.text = widget.webLink;
     fieldNameController.text = widget.textFieldName;
     customWidthController.text = widget.customWidth.toString();
@@ -179,7 +180,7 @@ class _FbInformationState extends State<FbInformation> {
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(0, 24.0, 0, 24.0),
-          title: Text('Text Property Window'),
+          title: Text('Information Property Window'),
           content: Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: EdgeInsets.all(8.0),
@@ -254,7 +255,7 @@ class _FbInformationState extends State<FbInformation> {
                             child: DropdownButtonFormField<String>(
                                 value: selectedFieldType,
                                 items:
-                                widget.fieldTypeCheck.map((String value) {
+                                    widget.fieldTypeCheck.map((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
@@ -308,9 +309,9 @@ class _FbInformationState extends State<FbInformation> {
                           Expanded(
                             child: selectedSize == "Custom"
                                 ? TextField(
-                              keyboardType: TextInputType.number,
-                              controller: customWidthController,
-                            )
+                                    keyboardType: TextInputType.number,
+                                    controller: customWidthController,
+                                  )
                                 : Text(""),
                           ),
                         ],
@@ -326,9 +327,9 @@ class _FbInformationState extends State<FbInformation> {
                           Expanded(
                             child: selectedSize == "Custom"
                                 ? TextField(
-                              keyboardType: TextInputType.number,
-                              controller: customHeightController,
-                            )
+                                    keyboardType: TextInputType.number,
+                                    controller: customHeightController,
+                                  )
                                 : Text(""),
                           ),
                         ],
@@ -340,19 +341,19 @@ class _FbInformationState extends State<FbInformation> {
                             child: selectedFieldType == "Text"
                                 ? Text("Text")
                                 : selectedFieldType == "Media"
-                                ? Text("")
-                                : Text("Web Link"),
+                                    ? Text("")
+                                    : Text("Web Link"),
                           ),
                           Expanded(
                               child: selectedFieldType == "Text"
                                   ? TextField(
-                                controller: textController,
-                              )
+                                      controller: textController,
+                                    )
                                   : selectedFieldType == "Media"
-                                  ? Text("")
-                                  : TextField(
-                                controller: webLinkController,
-                              )),
+                                      ? Text("")
+                                      : TextField(
+                                          controller: webLinkController,
+                                        )),
                         ],
                       ),
                       Row(
@@ -363,7 +364,7 @@ class _FbInformationState extends State<FbInformation> {
                             child: DropdownButtonFormField<String>(
                                 value: selectedborderwidth,
                                 items:
-                                widget.setborderwidth.map((String value) {
+                                    widget.setborderwidth.map((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
@@ -410,8 +411,8 @@ class _FbInformationState extends State<FbInformation> {
                             child: selectedFieldType == "Text"
                                 ? Text("Text Alignment")
                                 : selectedFieldType == "Media"
-                                ? Text("Media Alignment")
-                                : Text("Web Link Alignment"),
+                                    ? Text("Media Alignment")
+                                    : Text("Web Link Alignment"),
                           ),
                           Expanded(
                             child: DropdownButtonFormField<String>(
@@ -470,20 +471,20 @@ class _FbInformationState extends State<FbInformation> {
                             child: selectedFieldType == "Text"
                                 ? Text("Font")
                                 : selectedFieldType == "Media"
-                                ? Text("Width")
-                                : Text(""),
+                                    ? Text("Width")
+                                    : Text(""),
                           ),
                           Expanded(
                             child: selectedFieldType == "Text"
                                 ? TextField(
-                                controller: fontSizeController,
-                                keyboardType: TextInputType.number)
+                                    controller: fontSizeController,
+                                    keyboardType: TextInputType.number)
                                 : selectedFieldType == "Media"
-                                ? TextField(
-                              controller: mediaWidthController,
-                              keyboardType: TextInputType.number,
-                            )
-                                : Text(""),
+                                    ? TextField(
+                                        controller: mediaWidthController,
+                                        keyboardType: TextInputType.number,
+                                      )
+                                    : Text(""),
                           ),
                         ],
                       ),
@@ -494,25 +495,25 @@ class _FbInformationState extends State<FbInformation> {
                             child: selectedFieldType == "Text"
                                 ? Text("Colour")
                                 : selectedFieldType == "Media"
-                                ? Text("Height")
-                                : Text(""),
+                                    ? Text("Height")
+                                    : Text(""),
                           ),
                           Expanded(
                             child: selectedFieldType == "Text"
                                 ? TextButton(
-                                child: Text(
-                                  "Pick Font Color",
-                                  style:
-                                  TextStyle(color: selectedfontColor),
-                                ),
-                                onPressed: () {
-                                  pickColor(context, "Pick Font Color");
-                                })
+                                    child: Text(
+                                      "Pick Font Color",
+                                      style:
+                                          TextStyle(color: selectedfontColor),
+                                    ),
+                                    onPressed: () {
+                                      pickColor(context, "Pick Font Color");
+                                    })
                                 : selectedFieldType == "Media"
-                                ? TextField(
-                                controller: mediaHeightController,
-                                keyboardType: TextInputType.number)
-                                : Text(""),
+                                    ? TextField(
+                                        controller: mediaHeightController,
+                                        keyboardType: TextInputType.number)
+                                    : Text(""),
                           ),
                         ],
                       ),
@@ -523,18 +524,18 @@ class _FbInformationState extends State<FbInformation> {
                             child: selectedFieldType == "Text"
                                 ? Text("")
                                 : selectedFieldType == "Media"
-                                ? Text("Border")
-                                : Text(""),
+                                    ? Text("Border")
+                                    : Text(""),
                           ),
                           Expanded(
                             child: selectedFieldType == "Text"
                                 ? Text("")
                                 : selectedFieldType == "Media"
-                                ? TextField(
-                              controller: mediaBorderWidthController,
-                              keyboardType: TextInputType.number,
-                            )
-                                : Text(""),
+                                    ? TextField(
+                                        controller: mediaBorderWidthController,
+                                        keyboardType: TextInputType.number,
+                                      )
+                                    : Text(""),
                           ),
                         ],
                       ),
@@ -633,6 +634,34 @@ class _FbInformationState extends State<FbInformation> {
               },
             ),
             TextButton(
+              child: const Text('Duplicate', style: TextStyle(fontSize: 15.0)),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  AppConstants.elementsList.add(ElementTypes(
+                      elementName: "Information",
+                      element: FbInformation(
+                        borderwidth: widget.borderwidth,
+                        customHeight: widget.customHeight,
+                        customWidth: widget.customWidth,
+                        fieldAlignM: widget.fieldAlignM,
+                        fieldsize: widget.fieldsize,
+                        fontSize: widget.fontSize,
+                        mediaBorderWidth: widget.mediaBorderWidth,
+                        mediaHeight: widget.mediaHeight,
+                        mediaWidth: widget.mediaWidth,
+                        shadow: widget.shadow,
+                        text: widget.text,
+                        textFieldName: widget.textFieldName,
+                        textHidedName: widget.textHidedName,
+                        txtAlign: widget.txtAlign,
+                        webLink: widget.webLink,
+                      ),
+                      elementId: "Information${AppConstants.elementID}"));
+                });
+              },
+            ),
+            TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   setState(() {
@@ -667,26 +696,26 @@ class _FbInformationState extends State<FbInformation> {
   }
 
   void pickColor(BuildContext context, String title) => showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title),
-      content: Column(
-        children: [
-          ColorPicker(
-              pickerColor: selectedfontColor,
-              onColorChanged: (color) =>
-                  setState(() => selectedfontColor = color)),
-          TextButton(
-            child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
-            onPressed: () {
-              Navigator.of(context).pop();
-              setState(() {});
-            },
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Column(
+            children: [
+              ColorPicker(
+                  pickerColor: selectedfontColor,
+                  onColorChanged: (color) =>
+                      setState(() => selectedfontColor = color)),
+              TextButton(
+                child: const Text('SELECT', style: TextStyle(fontSize: 20.0)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   List<Widget> _getRules() {
     List<Widget> rulesTextFields = [];

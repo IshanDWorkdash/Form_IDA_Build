@@ -40,10 +40,13 @@ dependencies:
   flutter_masked_text: ^0.8.0
   flutter_simple_calculator: ^2.0.0+1
   image_picker: ^0.8.4+4
-  syncfusion_flutter_signaturepad: ^19.4.38
   file_picker: ^4.3.0
   open_file: ^3.2.1
   editable: ^2.0.0
+  restart_app: ^1.1.0
+  syncfusion_flutter_signaturepad: ^20.1.48
+  permission_handler: ^9.2.0
+  image_gallery_saver: ^1.7.1
 
 dev_dependencies:
   flutter_test:
@@ -68,8 +71,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/capture.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

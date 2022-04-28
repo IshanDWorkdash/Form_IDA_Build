@@ -7,11 +7,12 @@ import 'package:form_ida_build/common_widgets/fb_date_picker.dart';
 import 'package:form_ida_build/common_widgets/fb_dropdown.dart';
 import 'package:form_ida_build/common_widgets/fb_file_picker.dart';
 import 'package:form_ida_build/common_widgets/fb_information.dart';
-import 'package:form_ida_build/common_widgets/fb_lookup.dart';
 import 'package:form_ida_build/common_widgets/fb_number.dart';
 import 'package:form_ida_build/common_widgets/fb_radio_button.dart';
+import 'package:form_ida_build/common_widgets/fb_refresh.dart';
 import 'package:form_ida_build/common_widgets/fb_section.dart';
 import 'package:form_ida_build/common_widgets/fb_signature.dart';
+import 'package:form_ida_build/common_widgets/fb_space.dart';
 import 'package:form_ida_build/common_widgets/fb_table.dart';
 import 'package:form_ida_build/common_widgets/fb_text.dart';
 import 'package:form_ida_build/common_widgets/fb_text_field.dart';
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       key: Key(AppConstants.elementsList[item].elementId),
       onDismissed: (direction) {
         ElementTypes element = AppConstants.elementsList[item];
-        showSnackBar(context, element, item);
+        // showSnackBar(context, element, item);
         removeElement(item);
       },
       background: deleteItem(),
@@ -62,17 +63,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  showSnackBar(BuildContext context, ElementTypes element, int item) {
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(element.elementName + ' deleted'),
-      action: SnackBarAction(
-        label: "Undo Delete",
-        onPressed: () {
-          undoDelete(item, element);
-        },
-      ),
-    ));
-  }
+  // showSnackBar(BuildContext context, ElementTypes element, int item) {
+  //   Scaffold.of(context).showSnackBar(SnackBar(
+  //     content: Text(element.elementName + ' deleted'),
+  //     action: SnackBarAction(
+  //       label: "Undo Delete",
+  //       onPressed: () {
+  //         undoDelete(item, element);
+  //       },
+  //     ),
+  //   ));
+  // }
 
   undoDelete(item, element) {
     setState(() {
@@ -195,17 +196,25 @@ class _HomePageState extends State<HomePage> {
       case 14:
         setState(() {
           AppConstants.elementsList.add(ElementTypes(
-              elementName: "Lookup",
-              element: FbLookup(),
-              elementId: "Lookup${AppConstants.elementID}"));
+              elementName: "Section",
+              element: FbSection(),
+              elementId: "Section${AppConstants.elementID}"));
         });
         break;
       case 15:
         setState(() {
           AppConstants.elementsList.add(ElementTypes(
-              elementName: "Section",
-              element: FbSection(),
-              elementId: "Section${AppConstants.elementID}"));
+              elementName: "Refresh",
+              element: FbRefresh(),
+              elementId: "Refresh${AppConstants.elementID}"));
+        });
+        break;
+      case 16:
+        setState(() {
+          AppConstants.elementsList.add(ElementTypes(
+              elementName: "Space",
+              element: FbSpace(),
+              elementId: "Space${AppConstants.elementID}"));
         });
     }
   }
@@ -220,7 +229,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Form Builder Screen"),
+        title: Text(
+          "Form Builder Screen",
+          style: TextStyle(color: Colors.grey.shade50),
+        ),
+        brightness: Brightness.dark,
+        backgroundColor: Colors.indigo.shade600,
+        centerTitle: true,
+        // actions: [
+        //   TextButton(
+        //       onPressed: () {
+        //         if (adds.length > 0) {
+        //           adds.clear();
+        //           setState(() {});
+        //         }
+        //       },
+        //       child: Text(
+        //         "Clear",
+        //         style: TextStyle(color: Colors.grey.shade50),
+        //       ))
+        // ],
       ),
       body: SafeArea(
         child: Column(

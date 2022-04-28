@@ -8,31 +8,52 @@ class FbCheckBox extends StatefulWidget {
   List<String> nameList = <String>[];
   String itemString = " Sample 1, Sample 2, Sample 3, Sample 4";
   double fontSize;
-  Color bgColor;
-  Color textColor;
   List<String> sizeCheck = <String>["Small", "Medium", "Large", "Custom"];
   double? fieldsize;
   List<String> fieldalign = <String>["Left", "Center", "Right"];
-  List<String> ddalign = <String>["Left", "Center", "Right"];
+  List<String> cbAlign = <String>["Left", "Center", "Right"];
   Alignment fieldAlignM;
   num customWidth;
   num customHeight;
   String textFieldName;
   String textHidedName;
-  CrossAxisAlignment ddAlign;
+  CrossAxisAlignment cbAlignmnt;
+  double? fontSizeFieldName;
+
+  Color? txtColor1;
+  Color? txtColor2;
+  Color? textbgColor1;
+  Color? textbgColor2;
+
+  Color? fieldColor1;
+  Color? fieldColor2;
+  Color? fieldbgColor1;
+  Color? fieldbgColor2;
+
+  Color? bgColorAll1;
+  Color? bgColorAll2;
 
   FbCheckBox({
     this.textFieldName = "Filed Name",
     this.textHidedName = "",
-    this.bgColor = Colors.white,
-    this.fontSize = 13.0,
-    this.textColor = Colors.black87,
-    this.itemString = " Sample 1, Sample 2, Sample 3, Sample 4",
+    this.fontSize = 16.0,
+    this.fontSizeFieldName = 15.0,
+    // this.itemString = " Sample 1, Sample 2, Sample 3, Sample 4",
     this.fieldsize = double.infinity,
     this.fieldAlignM = Alignment.centerLeft,
     this.customWidth = 0.9,
-    this.customHeight = 0.23,
-    this.ddAlign = CrossAxisAlignment.start,
+    this.customHeight = 0.22,
+    this.cbAlignmnt = CrossAxisAlignment.start,
+    this.txtColor1 = Colors.black,
+    this.textbgColor1 = Colors.white60,
+    this.fieldColor1 = Colors.black,
+    this.fieldbgColor1 = Colors.white,
+    this.bgColorAll1 = Colors.white,
+    this.txtColor2 = Colors.black,
+    this.textbgColor2 = Colors.white,
+    this.fieldColor2 = Colors.black,
+    this.fieldbgColor2 = Colors.white,
+    this.bgColorAll2 = Colors.white,
   });
 
   @override
@@ -40,8 +61,8 @@ class FbCheckBox extends StatefulWidget {
 }
 
 class _FbCheckBoxState extends State<FbCheckBox> {
-  bool disappearvalue = false;
-  bool disappearsetValue = false;
+  bool disappearvalue = true;
+  bool disappearsetValue = true;
 
   bool mandotoryvalue = false;
   bool mandotorysetValue = false;
@@ -52,8 +73,26 @@ class _FbCheckBoxState extends State<FbCheckBox> {
   String selectedfieldalign = "Left";
   String selectedsetfieldalign = "Left";
 
-  String selectedddalign = "Left";
-  String selectedsetddalign = "Left";
+  String selectedcbAlign = "Left";
+  String selectedsetcbAlign = "Left";
+
+  FontWeight textBold = FontWeight.normal;
+  FontWeight textSetBold = FontWeight.normal;
+
+  FontStyle textItalic = FontStyle.normal;
+  FontStyle textSetItalic = FontStyle.normal;
+
+  TextDecoration textUnderLine = TextDecoration.none;
+  TextDecoration textSetUnderLine = TextDecoration.none;
+
+  FontWeight fieldBold = FontWeight.normal;
+  FontWeight fieldSetBold = FontWeight.normal;
+
+  FontStyle fieldItalic = FontStyle.normal;
+  FontStyle fieldSetItalic = FontStyle.normal;
+
+  TextDecoration fieldUnderLine = TextDecoration.none;
+  TextDecoration fieldSetUnderLine = TextDecoration.none;
 
   @override
   void initState() {
@@ -72,24 +111,34 @@ class _FbCheckBoxState extends State<FbCheckBox> {
         showMyDialog();
       },
       child: Container(
-        alignment: Alignment.center,
+        alignment: widget.fieldAlignM,
         child: Container(
           width: widget.fieldsize,
           height: MediaQuery.of(context).size.height * widget.customHeight,
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           decoration: BoxDecoration(
-            color: widget.bgColor,
+            color: widget.bgColorAll2,
             borderRadius: BorderRadius.circular(12.0),
             border: Border.all(color: Colors.blueAccent),
           ),
-          child: Column(crossAxisAlignment: widget.ddAlign, children: [
+          child: Column(crossAxisAlignment: widget.cbAlignmnt, children: [
+            SizedBox(
+              height: 8.0,
+            ),
             Text(
               disappearvalue == true
                   ? widget.textFieldName
                   : widget.textHidedName,
+              style: TextStyle(
+                  color: widget.fieldColor2,
+                  backgroundColor: widget.fieldbgColor2,
+                  fontSize: widget.fontSizeFieldName,
+                  fontWeight: fieldBold,
+                  fontStyle: fieldItalic,
+                  decoration: fieldUnderLine),
             ),
             SizedBox(
-              height: 12.0,
+              height: 10.0,
             ),
             Column(
               children: widget.items
@@ -100,13 +149,13 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 10.0,
+                                width: 13.0,
                               ),
                               SizedBox(
                                 height: 13,
                                 width: 13,
                                 child: Checkbox(
-                                  activeColor: Colors.blueAccent,
+                                  activeColor: widget.txtColor2,
                                   value: e.value,
                                   onChanged: (bool? val) {
                                     setState(() {
@@ -120,14 +169,18 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                                 child: Text(
                                   e.name,
                                   style: TextStyle(
-                                    fontSize: widget.fontSize,
-                                    color: widget.textColor,
-                                  ),
+                                      fontSize: widget.fontSize,
+                                      color: widget.txtColor2,
+                                      fontWeight: textBold,
+                                      backgroundColor: widget.textbgColor2,
+                                      fontStyle: textItalic,
+                                      decoration: textUnderLine),
                                 ),
                               ),
+                              SizedBox(width: 8),
                             ],
                           ),
-                          SizedBox(height: 6),
+                          SizedBox(height: 3),
                         ],
                       ))
                   .toList(),
@@ -139,23 +192,28 @@ class _FbCheckBoxState extends State<FbCheckBox> {
   }
 
   Future<void> showMyDialog() async {
-    TextEditingController fieldNameController = new TextEditingController();
+    TextEditingController items = new TextEditingController();
     TextEditingController fontSize = new TextEditingController();
+    TextEditingController fieldNameController = new TextEditingController();
     TextEditingController customWidthController = new TextEditingController();
     TextEditingController customHeightController = new TextEditingController();
-    TextEditingController items = new TextEditingController();
+    TextEditingController fontSizeController = new TextEditingController();
+    TextEditingController fontSizeFieldNameController =
+        new TextEditingController();
+    items.text = widget.itemString;
+    fontSize.text = widget.fontSize.toString();
     fieldNameController.text = widget.textFieldName;
     customWidthController.text = widget.customWidth.toString();
     customHeightController.text = widget.customHeight.toString();
-    fontSize.text = widget.fontSize.toString();
-    items.text = widget.itemString;
+    fontSizeController.text = widget.fontSize.toString();
+    fontSizeFieldNameController.text = widget.fontSizeFieldName.toString();
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(0, 24.0, 0, 24.0),
-          title: Text('Radio Button Property Window'),
+          title: Text('Check Box Property Window'),
           content: Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: EdgeInsets.all(8.0),
@@ -163,27 +221,26 @@ class _FbCheckBoxState extends State<FbCheckBox> {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Text("   Field Name",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
+                          flex: 1,
+                          child: Text("Filed Name"),
+                        ),
+                        Expanded(
+                          flex: 2,
                           child: TextField(
                             controller: fieldNameController,
                           ),
                         ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
                         Expanded(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
                                   Text(
-                                    "Hide  ",
+                                    "  Hide   ",
                                     style: TextStyle(
                                         color: Colors.deepOrangeAccent,
                                         fontSize: 10.0),
@@ -216,18 +273,33 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Items List"),
+                          child: Text("Field Name Alignment"),
                         ),
                         Expanded(
                           flex: 2,
-                          child: TextField(
-                            controller: items,
-                          ),
+                          child: DropdownButtonFormField<String>(
+                              value: selectedcbAlign,
+                              items: widget.cbAlign.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                _setState(() {
+                                  selectedcbAlign = newValue!;
+                                });
+                              }),
                         ),
                       ],
                     ),
@@ -250,7 +322,6 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                               }).toList(),
                               onChanged: (newValue) {
                                 _setState(() {
-                                  print(newValue);
                                   selectedSize = newValue!;
                                 });
                               }),
@@ -327,24 +398,161 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Dropdown Alignment"),
+                          child: Text("Field Size"),
                         ),
                         Expanded(
-                          child: DropdownButtonFormField<String>(
-                              value: selectedddalign,
-                              items: widget.ddalign.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                _setState(() {
-                                  selectedddalign = newValue!;
-                                });
-                              }),
+                          flex: 2,
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            controller: fontSizeFieldNameController,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 90.0),
+                        Ink(
+                          decoration: fieldBold == FontWeight.bold
+                              ? const ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : const ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_bold),
+                            tooltip: 'Bold',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (fieldBold == FontWeight.normal) {
+                                  fieldBold = FontWeight.bold;
+                                } else {
+                                  fieldBold = FontWeight.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: fieldItalic == FontStyle.italic
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  shape: CircleBorder(),
+                                  color: Colors.transparent),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_italic),
+                            tooltip: 'Italic',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (fieldItalic == FontStyle.normal) {
+                                  fieldItalic = FontStyle.italic;
+                                } else {
+                                  fieldItalic = FontStyle.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: fieldUnderLine == TextDecoration.underline
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_underline),
+                            tooltip: 'Underline',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (fieldUnderLine == TextDecoration.none) {
+                                  fieldUnderLine = TextDecoration.underline;
+                                } else {
+                                  fieldUnderLine = TextDecoration.none;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Field Name Color"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            child: Text(
+                              "Pick Font Color",
+                              style: TextStyle(
+                                color: widget.fieldColor1,
+                              ),
+                            ),
+                            onPressed: () {
+                              pickColor(context, "Pick Font Color", 3);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Field Name BG Color"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            child: Text(
+                              "Pick Background Color",
+                            ),
+                            onPressed: () {
+                              pickColor(context, "Pick Background Color", 4);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 3.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Items List"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextField(
+                            controller: items,
+                          ),
                         ),
                       ],
                     ),
@@ -353,7 +561,7 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Font Size"),
+                          child: Text("Text Size"),
                         ),
                         Expanded(
                           flex: 2,
@@ -370,9 +578,87 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        SizedBox(width: 90.0),
+                        Ink(
+                          decoration: textBold == FontWeight.bold
+                              ? const ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : const ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_bold),
+                            tooltip: 'Bold',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (textBold == FontWeight.normal) {
+                                  textBold = FontWeight.bold;
+                                } else {
+                                  textBold = FontWeight.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: textItalic == FontStyle.italic
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  shape: CircleBorder(),
+                                  color: Colors.transparent),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_italic),
+                            tooltip: 'Italic',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (textItalic == FontStyle.normal) {
+                                  textItalic = FontStyle.italic;
+                                } else {
+                                  textItalic = FontStyle.normal;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Ink(
+                          decoration: textUnderLine == TextDecoration.underline
+                              ? ShapeDecoration(
+                                  color: Colors.grey, shape: CircleBorder())
+                              : ShapeDecoration(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder()),
+                          child: IconButton(
+                            icon: const Icon(Icons.format_underline),
+                            tooltip: 'Underline',
+                            splashColor: Colors.grey,
+                            highlightColor: Colors.grey,
+                            onPressed: () {
+                              _setState(() {
+                                if (textUnderLine == TextDecoration.none) {
+                                  textUnderLine = TextDecoration.underline;
+                                } else {
+                                  textUnderLine = TextDecoration.none;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
                         Expanded(
                           flex: 1,
-                          child: Text("Font Color"),
+                          child: Text("Text Color"),
                         ),
                         Expanded(
                           flex: 2,
@@ -380,7 +666,7 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                             child: Text(
                               "Pick Font Color",
                               style: TextStyle(
-                                color: widget.textColor,
+                                color: widget.txtColor1,
                               ),
                             ),
                             onPressed: () {
@@ -390,12 +676,15 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("background Color"),
+                          child: Text("Text BG Color"),
                         ),
                         Expanded(
                           flex: 2,
@@ -409,6 +698,36 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 3.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text("Field BG Color"),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            child: Text(
+                              "Pick Background Color",
+                            ),
+                            onPressed: () {
+                              pickColor(context, "Pick Background Color", 5);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -451,6 +770,28 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                   widget.itemString = items.text;
                   widget.textFieldName = fieldNameController.text;
                   disappearsetValue = disappearvalue;
+                  selectedsetcbAlign = selectedcbAlign;
+
+                  widget.fontSizeFieldName =
+                      double.parse(fontSizeFieldNameController.text);
+                  selectedsetSize = selectedSize;
+
+                  widget.txtColor2 = widget.txtColor1;
+                  widget.textbgColor2 = widget.textbgColor1;
+
+                  widget.fieldColor2 = widget.fieldColor1;
+                  widget.fieldbgColor2 = widget.fieldbgColor1;
+
+                  widget.bgColorAll2 = widget.bgColorAll1;
+
+                  textSetBold = textBold;
+                  textSetItalic = textItalic;
+                  textSetUnderLine = textUnderLine;
+
+                  fieldSetBold = fieldBold;
+                  fieldSetItalic = fieldItalic;
+                  fieldSetUnderLine = fieldUnderLine;
+
                   if (widget.itemString == null || widget.itemString == "") {
                     widget.itemString =
                         " Sample 1, Sample 2, Sample 3, Sample 4";
@@ -491,12 +832,12 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                     widget.fieldsize =
                         MediaQuery.of(context).size.width * widget.customWidth;
                   }
-                  if (selectedddalign == "Left") {
-                    widget.ddAlign = CrossAxisAlignment.start;
-                  } else if (selectedddalign == "Center") {
-                    widget.ddAlign = CrossAxisAlignment.center;
-                  } else if (selectedddalign == "Right") {
-                    widget.ddAlign = CrossAxisAlignment.end;
+                  if (selectedcbAlign == "Left") {
+                    widget.cbAlignmnt = CrossAxisAlignment.start;
+                  } else if (selectedcbAlign == "Center") {
+                    widget.cbAlignmnt = CrossAxisAlignment.center;
+                  } else if (selectedcbAlign == "Right") {
+                    widget.cbAlignmnt = CrossAxisAlignment.end;
                   }
                 });
               },
@@ -510,16 +851,24 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                       elementName: "CheckBox",
                       element: FbCheckBox(
                         fontSize: widget.fontSize,
-                        textColor: widget.textColor,
-                        itemString: widget.itemString,
                         fieldsize: widget.fieldsize,
                         fieldAlignM: widget.fieldAlignM,
                         customHeight: widget.customHeight,
                         customWidth: widget.customWidth,
-                        ddAlign: widget.ddAlign,
                         textFieldName: widget.textFieldName,
                         textHidedName: widget.textHidedName,
-                        bgColor: widget.bgColor,
+                        txtColor1: widget.txtColor1,
+                        bgColorAll2: widget.bgColorAll2,
+                        bgColorAll1: widget.bgColorAll1,
+                        fieldColor1: widget.fieldColor1,
+                        fieldColor2: widget.fieldColor2,
+                        fieldbgColor1: widget.fieldbgColor1,
+                        fieldbgColor2: widget.fieldbgColor2,
+                        fontSizeFieldName: widget.fontSizeFieldName,
+                        textbgColor1: widget.textbgColor1,
+                        textbgColor2: widget.textbgColor2,
+                        txtColor2: widget.txtColor2,
+                        cbAlignmnt: widget.cbAlignmnt,
                       ),
                       elementId: "Check${AppConstants.elementID}"));
                 });
@@ -541,9 +890,22 @@ class _FbCheckBoxState extends State<FbCheckBox> {
                     if (disappearsetValue != disappearvalue) {
                       disappearvalue = disappearsetValue;
                     }
-                    if (selectedsetddalign != selectedddalign) {
-                      selectedddalign = selectedsetddalign;
+                    if (selectedsetcbAlign != selectedcbAlign) {
+                      selectedcbAlign = selectedsetcbAlign;
                     }
+
+                    widget.txtColor1 = widget.txtColor2;
+                    widget.textbgColor1 = widget.textbgColor2;
+                    widget.fieldColor1 = widget.fieldColor2;
+                    widget.fieldbgColor1 = widget.fieldbgColor2;
+
+                    textBold = textSetBold;
+                    textItalic = textSetItalic;
+                    textUnderLine = textSetUnderLine;
+
+                    fieldBold = fieldSetBold;
+                    fieldItalic = fieldSetItalic;
+                    fieldUnderLine = fieldSetUnderLine;
                   });
                 },
                 child: const Text(
@@ -578,12 +940,28 @@ class _FbCheckBoxState extends State<FbCheckBox> {
   Widget buildPicker(int key) {
     if (key == 1) {
       return ColorPicker(
-          pickerColor: widget.textColor,
-          onColorChanged: (color) => setState(() => widget.textColor = color));
+          pickerColor: widget.txtColor1!,
+          onColorChanged: (color) => setState(() => widget.txtColor1 = color));
+    } else if (key == 2) {
+      return ColorPicker(
+          pickerColor: widget.textbgColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.textbgColor1 = color));
+    } else if (key == 3) {
+      return ColorPicker(
+          pickerColor: widget.fieldColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.fieldColor1 = color));
+    } else if (key == 4) {
+      return ColorPicker(
+          pickerColor: widget.fieldbgColor1!,
+          onColorChanged: (color) =>
+              setState(() => widget.fieldbgColor1 = color));
     } else {
       return ColorPicker(
-          pickerColor: widget.bgColor,
-          onColorChanged: (color) => setState(() => widget.bgColor = color));
+          pickerColor: widget.bgColorAll1!,
+          onColorChanged: (color) =>
+              setState(() => widget.bgColorAll1 = color));
     }
   }
 }
